@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1059337201276",
+    "firebase_url": "https://react-native-test-b5bec.firebaseio.com",
+    "project_id": "react-native-test-b5bec",
+    "storage_bucket": "react-native-test-b5bec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1059337201276:android:8b9d6d7b137759ac",
+        "android_client_info": {
+          "package_name": "com.triviaapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1059337201276-8rfj53kd9oiv78l986pstasporfrakp1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8MYVpXWVTotn7FQ3G6CfsBZvxceembw4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
