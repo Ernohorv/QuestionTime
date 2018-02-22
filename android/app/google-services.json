@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1059337201276:android:8b9d6d7b137759ac",
+        "mobilesdk_app_id": "1:1059337201276:android:9f843c36de31bc84",
         "android_client_info": {
-          "package_name": "com.triviaapp"
+          "package_name": "com.questiontime"
         }
       },
       "oauth_client": [
