@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import App from '../../App';
-import { Button } from 'native-base';
+import { Button , Text, Container} from 'native-base';
 
-export default class RegistrationForm extends React.Component {
+export default class RegistrationForm extends Component {
 
     onClick() {
         this.props.navigation.navigate('Login');
@@ -10,11 +10,11 @@ export default class RegistrationForm extends React.Component {
 
     render() {
         return (
-            <View>
-                <Button onPress={() => onClick()}>
+            <Container>
+                <Button onPress={() => this.onClick()}>
                     <Text> Click Me! </Text>
                 </Button>
-            </View>
+            </Container>
         );
     }
 }

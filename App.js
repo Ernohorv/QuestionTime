@@ -10,7 +10,8 @@ import {
     StackNavigator,
 } from 'react-navigation';
 
-import { LoginForm, RegistrationForm } from './components/scenes';
+import LoginForm  from './components/scenes/LoginForm';
+import RegistrationForm from './components/scenes/RegistrationForm';
 
 const RootStack = StackNavigator({
     Login: { screen: LoginForm },
@@ -19,9 +20,12 @@ const RootStack = StackNavigator({
 },
     { initialRouteName: 'Registration' });
 
-
 export default class App extends Component {
-    state = { loggedIn: false };
+    constructor(props){
+        super(props);
+        this.state = { loggedIn: false };
+    }
+    
 
     componentWillMount() {
         /*const config = {
@@ -80,6 +84,8 @@ export default class App extends Component {
                 </Button>
             </View>*/
             <RootStack />
+
+            
             /*<Container>
                 <Header>Registration</Header>
                 <Content>

@@ -12,14 +12,16 @@ let Login = t.struct({
     password: t.String
 });
 
-export class LoginForm extends Component {
-
-    state = {
-        email: '',
-        password: '',
-        error: '',
-        loading: false
-    };
+export default class LoginForm extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            email: '',
+            password: '',
+            error: '',
+            loading: false
+        };
+    }
 
     onLogin() {
         const { email, password } = this.state;
