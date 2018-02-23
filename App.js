@@ -1,52 +1,88 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
-  Text,
-  View
+    View, StyleSheet, Button, Text
 } from 'react-native';
 
 import firebase from 'react-native-firebase';
+import { Fab, Icon, Container, Header, Input, Content, Card, CardItem, Body, Form, Item, Label } from 'native-base';
+import Router from './Router';
+import { Actions } from 'react-native-router-flux';
 
 
 export default class App extends Component {
+    state = {loggedIn: false};
 
   componentWillMount() {
-    firebase.auth()
-      .signInAndRetrieveDataWithEmailAndPassword('1234567zzz@gmail.com', '123456')
-      .then(credential => {
-        if (credential) {
-          firebase.messaging().getInitialNotification().then(notif => {
-            //console.warn("INITIAL NOTIFICATION", notif)
-          });
-          firebase.messaging().onMessage(payload => {
-            /*firebase.messaging().createLocalNotification({
-              title: 'My app',
-              body: 'Hello world',
-              icon: 'ic_launcher',
-              priority: 'high',
-              click_action: 'ACTION',
-              show_in_foreground: true,
-              sound: 'default',
-              opened_from_tray: true
-            })*/
-          });
+    const config = {
+        apiKey: 'AIzaSyDgyEuBEzyqCWfaFQwwx0CwHsyp8AH_Yw8',
+        authDomain: 'react-native-test-b5bec.firebaseapp.com',
+        databaseURL: 'https://react-native-test-b5bec.firebaseio.com',
+        projectId: 'react-native-test-b5bec',
+        storageBucket: 'react-native-test-b5bec.appspot.com',
+        messagingSenderId: '1059337201276'
+        };
+    
+    firebase.initializeApp(config);
+
+    firebase.auth().onAuthStateChanged((user) => {
+        if(user) {
+            this.setState({loggedIn: true});
+        }else {
+            this.setState({loggedIn: false});
         }
-      }).catch((error) => {
-        console.warn("Api call error");
-        alert(error.message);
-      });
+    })
   }
+
+  onRegister = () => {
+      const {email, password} = this.state;
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+          .catch((error) => {
+              console.warn('Error');
+              alert(error.message);
+          });
+  };
+
+  onLogin = () => {
+      const {email, password} = this.state;
+      firebase.auth().signInWithEmailAndPassword(email, password)
+          .catch((error) => {
+              console.warn('Error');
+              alert(error.message);
+          });
+  };
+
+  registrationForm(){
+      //this.props.navigation.navigate('Registration');
+  }
+
+  loginForm(){
+      //this.props.navigation.navigate('Login');
+  }
+
 
   render() {
     return (
-      <View>
-        <Text>AUT Semester Project</Text>
-      </View>
+        <View>
+            <Button title="Login" onPress={Actions.login()}>
+                <Text>hi</Text>
+            </Button>
+        </View>
+      /*<Container>
+          <Header>Registration</Header>
+          <Content>
+              <Button full onPress={() => this.registrationForm.bind(this)}></Button>
+              <Button full onPress={() => this.loginForm.bind(this)}></Button>
+          </Content>
+      </Container>*/
     );
   }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        justifyContent: 'center',
+        marginTop: 50,
+        padding: 20,
+        backgroundColor: '#ffffff',
+    },
+});
