@@ -1,16 +1,30 @@
 import React, { Component } from 'react';
-import {View, Button, Text, StyleSheet} from 'react-native';
-import { Card, CardItem, Container, Content, Header, Body, Input, Item, Label } from 'native-base';
+import {StyleSheet} from 'react-native';
+import { Text, Button, Card, CardItem, Container, Content, Header, Body, Input, Item, Label } from 'native-base';
 import firebase from 'react-native-firebase';
 import { Spinner } from '../common/Spinner'
 import t from 'tcomb-form-native';
 
-let Form = t.form.Form;
+const Form = t.form.Form;
 
-let Login = t.struct({
+const Login = t.struct({
     email: t.String,
     password: t.String
 });
+
+const options = {
+    auto : 'placeholders',    
+    fields: {
+        password : {
+            type : 'password',
+            password : true,
+            secureTextEntry : true
+        },
+        email : {
+            error : 'Insert a valid email'
+        }
+    }
+}
 
 export default class LoginForm extends Component {
     constructor(props){
@@ -18,7 +32,7 @@ export default class LoginForm extends Component {
         this.state = {
             email: '',
             password: '',
-            error: '',
+            error: 'nincs hiba',
             loading: false
         };
     }
@@ -27,15 +41,16 @@ export default class LoginForm extends Component {
         const { email, password } = this.state;
 
         this.setState({error: '', loading: true});
-
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then(this.onLoginSucces.bind(this))
             .catch(() => {
+                this.setState({ error: 'Authentication failed.'});
+                /*
                 firebase.auth().createUserWithEmailAndPassword(email, password)
                     .then(this.onLoginSucces.bind(this))
                     .catch(() => {
                         this.setState({ error: 'Authentication failed.'});
-                    });
+                    });*/
             });
     }
 
@@ -51,16 +66,23 @@ export default class LoginForm extends Component {
             password: '',
             loading: false,
             error: ''
-        })
+        });
+        this.props.navigation.navigate('Registration');
     }
 
     render() {
         return (
-            <View style={styles.container}>
+            <Container style={styles.container}>
                 <Form
                 ref='form'
-                type={Login}/>
-            </View>
+                type={Login}
+                options={options}
+                />
+                <Button onPress={() => this.onLogin()}>
+                    <Text>Login</Text>
+                </Button>
+                <Text>{this.state.error}</Text>
+            </Container>
         );
     }
 }
