@@ -5,77 +5,90 @@ import {
 
 import firebase from 'react-native-firebase';
 import { Fab, Icon, Container, Header, Input, Content, Card, CardItem, Body, Form, Item, Label } from 'native-base';
-import Router from './Router';
-import { Actions } from 'react-native-router-flux';
+
+import {
+    StackNavigator,
+} from 'react-navigation';
+
+import { LoginForm, RegistrationForm } from './components/scenes';
+
+const RootStack = StackNavigator({
+    Login: { screen: LoginForm },
+    Registration: { screen: RegistrationForm },
+
+},
+    { initialRouteName: 'Registration' });
 
 
 export default class App extends Component {
-    state = {loggedIn: false};
+    state = { loggedIn: false };
 
-  componentWillMount() {
-    const config = {
-        apiKey: 'AIzaSyDgyEuBEzyqCWfaFQwwx0CwHsyp8AH_Yw8',
-        authDomain: 'react-native-test-b5bec.firebaseapp.com',
-        databaseURL: 'https://react-native-test-b5bec.firebaseio.com',
-        projectId: 'react-native-test-b5bec',
-        storageBucket: 'react-native-test-b5bec.appspot.com',
-        messagingSenderId: '1059337201276'
+    componentWillMount() {
+        /*const config = {
+            apiKey: 'AIzaSyDgyEuBEzyqCWfaFQwwx0CwHsyp8AH_Yw8',
+            authDomain: 'react-native-test-b5bec.firebaseapp.com',
+            databaseURL: 'https://react-native-test-b5bec.firebaseio.com',
+            projectId: 'react-native-test-b5bec',
+            storageBucket: 'react-native-test-b5bec.appspot.com',
+            messagingSenderId: '1059337201276'
         };
-    
-    firebase.initializeApp(config);
 
-    firebase.auth().onAuthStateChanged((user) => {
-        if(user) {
-            this.setState({loggedIn: true});
-        }else {
-            this.setState({loggedIn: false});
-        }
-    })
-  }
+        firebase.initializeApp(config);
+        */
 
-  onRegister = () => {
-      const {email, password} = this.state;
-      firebase.auth().createUserWithEmailAndPassword(email, password)
-          .catch((error) => {
-              console.warn('Error');
-              alert(error.message);
-          });
-  };
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                this.setState({ loggedIn: true });
+            } else {
+                this.setState({ loggedIn: false });
+            }
+        })
+    }
 
-  onLogin = () => {
-      const {email, password} = this.state;
-      firebase.auth().signInWithEmailAndPassword(email, password)
-          .catch((error) => {
-              console.warn('Error');
-              alert(error.message);
-          });
-  };
+    onRegister = () => {
+        const { email, password } = this.state;
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+            .catch((error) => {
+                console.warn('Error');
+                alert(error.message);
+            });
+    };
 
-  registrationForm(){
-      //this.props.navigation.navigate('Registration');
-  }
+    onLogin = () => {
+        const { email, password } = this.state;
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .catch((error) => {
+                console.warn('Error');
+                alert(error.message);
+            });
+    };
 
-  loginForm(){
-      //this.props.navigation.navigate('Login');
-  }
+    registrationForm() {
+        //this.props.navigation.navigate('Registration');
+    }
+
+    loginForm() {
+        //this.props.navigation.navigate('Login');
+    }
 
 
-  render() {
-    return (
-        <View>
-            <Button title="Login" onPress={Actions.login()}>
-                <Text>hi</Text>
-            </Button>
-        </View>
-      /*<Container>
-          <Header>Registration</Header>
-          <Content>
-              <Button full onPress={() => this.registrationForm.bind(this)}></Button>
-              <Button full onPress={() => this.loginForm.bind(this)}></Button>
-          </Content>
-      </Container>*/
-    );
-  }
+    render() {
+        return (
+            /*<View>
+                <Button title="Login" onPress={Actions.login()}>
+                    <Text>hi</Text>
+                </Button>
+            </View>*/
+            <RootStack />
+            /*<Container>
+                <Header>Registration</Header>
+                <Content>
+                    <Button full onPress={() => this.registrationForm.bind(this)}></Button>
+                    <Button full onPress={() => this.loginForm.bind(this)}></Button>
+                </Content>
+            </Container>*/
+        );
+    }
 }
 
 const styles = StyleSheet.create({
