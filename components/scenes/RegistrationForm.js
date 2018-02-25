@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import App from '../../App';
 import { Button , Text, Container, Content, Input, Item, Grid, Form, Label } from 'native-base';
+import firebase from 'react-native-firebase';
 
 export default class RegistrationForm extends Component {
 
@@ -17,11 +18,15 @@ export default class RegistrationForm extends Component {
     }
 
     onClick() {
+
+        //this.onRegister();
+
         this.props.navigation.navigate('Home');
+        console.log(this.state.password);
     }
 
     checkPassword(){
-        if(this.state.password != this.state.confirmPassword){
+        if(this.state.password.valueOf() !== this.state.confirmPassword.valueOf()){
             this.setState({
                invalidPass: true
             });
@@ -32,6 +37,13 @@ export default class RegistrationForm extends Component {
              });
         }
     }
+
+    onRegister = () => {
+        firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+            .catch((error) => {
+                console.warn('Error');
+            });
+    };
 
     render() {
         return (
@@ -44,13 +56,13 @@ export default class RegistrationForm extends Component {
                         </Item>
                         <Item floatingLabel error={this.state.invalidPass}>
                             <Label>Password</Label>
-                            <Input onChange={(value) => {this.setState({password: value}); this.checkPassword() } }/>
+                            <Input onChange={(value) => {this.setState({password: value.toString()}); this.checkPassword() } }/>
                         </Item>
                         <Item floatingLabel error={this.state.invalidPass}>
                             <Label>Confirm Password</Label>
-                            <Input onChange={(value) => {this.setState({confirmPassword: value}); this.checkPassword() } }/>
+                            <Input onChange={(value) => {this.setState({confirmPassword: value.toString()}); this.checkPassword() } }/>
                         </Item>
-                        <Button full onPress={() => this.onClick() } style={{alignSelf: 'center'}}>
+                        <Button full onPress={() => this.onClick() } style={{alignSelf: 'center', marginTop: 20}}>
                             <Text>Register </Text>
                         </Button>
                     </Form>
@@ -59,4 +71,3 @@ export default class RegistrationForm extends Component {
         );
     }
 }
-

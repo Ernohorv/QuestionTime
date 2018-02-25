@@ -14,6 +14,7 @@ import LoginForm  from './components/scenes/LoginForm';
 import RegistrationForm from './components/scenes/RegistrationForm';
 import HomeScreen from './components/scenes/HomeScreen';
 import GameScreen from './components/scenes/GameScreen';
+import WelcomeScreen from "./components/scenes/WelcomeScreen";
 
 const RootStack = StackNavigator(
 {
@@ -21,9 +22,10 @@ const RootStack = StackNavigator(
     Registration: { screen: RegistrationForm , navigationOptions : { header : null } },
     Home: { screen: HomeScreen , navigationOptions : { header : null } },
     Game: { screen: GameScreen , navigationOptions : { header : null } },
+    Welcome: { screen: WelcomeScreen, navigationOptions: { header: null }},
 
 },
-    { initialRouteName: 'Registration' },
+    { initialRouteName: 'Welcome' },
 );
 
 export default class App extends Component {
