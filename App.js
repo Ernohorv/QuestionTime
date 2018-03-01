@@ -31,7 +31,7 @@ const RootStack = StackNavigator(
 export default class App extends Component {
     constructor(props){
         super(props);
-        this.state = { loggedIn: false };
+        this.state = { loading: true };
     }
     
 
@@ -47,42 +47,25 @@ export default class App extends Component {
 
         firebase.initializeApp(config);
         */
-
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                this.setState({ loggedIn: true });
-            } else {
-                this.setState({ loggedIn: false });
-            }
-        })
     }
 
-    onRegister = () => {
-        const { email, password } = this.state;
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-            .catch((error) => {
-                console.warn('Error');
-                alert(error.message);
+    /**
+     * Stop listening for authentication state changes
+     * when the component unmounts.
+     */
+    ComponentWillUnMount() {
+
+        this.authSubscription();
+    }
+
+    componentDidMount() {
+        this.authSubscription = firebase.auth().onAuthStateChanged((user) => {
+            this.setState({
+                loading: false,
+                user,
             });
-    };
-
-    onLogin = () => {
-        const { email, password } = this.state;
-        firebase.auth().signInWithEmailAndPassword(email, password)
-            .catch((error) => {
-                console.warn('Error');
-                alert(error.message);
-            });
-    };
-
-    registrationForm() {
-        //this.props.navigation.navigate('Registration');
+        });
     }
-
-    loginForm() {
-        //this.props.navigation.navigate('Login');
-    }
-
 
     render() {
         return (

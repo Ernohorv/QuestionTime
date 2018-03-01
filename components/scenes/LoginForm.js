@@ -1,30 +1,8 @@
 import React, { Component } from 'react';
 import {StyleSheet} from 'react-native';
-import { Text, Button, Card, CardItem, Container, Content, Header, Body, Input, Item, Label } from 'native-base';
+import { Text, Button, Container, Content, Header, Input, Item, Label, Form, Body, Title } from 'native-base';
 import firebase from 'react-native-firebase';
 import { Spinner } from '../common/Spinner'
-import t from 'tcomb-form-native';
-
-const Form = t.form.Form;
-
-const Login = t.struct({
-    email: t.String,
-    password: t.String
-});
-
-const options = {
-    auto : 'placeholders',    
-    fields: {
-        password : {
-            type : 'password',
-            password : true,
-            secureTextEntry : true
-        },
-        email : {
-            error : 'Insert a valid email'
-        }
-    }
-}
 
 export default class LoginForm extends Component {
     constructor(props){
@@ -45,12 +23,6 @@ export default class LoginForm extends Component {
             .then(this.onLoginSucces.bind(this))
             .catch(() => {
                 this.setState({ error: 'Authentication failed.'});
-                /*
-                firebase.auth().createUserWithEmailAndPassword(email, password)
-                    .then(this.onLoginSucces.bind(this))
-                    .catch(() => {
-                        this.setState({ error: 'Authentication failed.'});
-                    });*/
             });
     }
 
@@ -67,21 +39,37 @@ export default class LoginForm extends Component {
             loading: false,
             error: ''
         });
-        this.props.navigation.navigate('Registration');
+        this.props.navigation.navigate('Game');
     }
 
     render() {
         return (
-            <Container style={styles.container}>
-                <Form
-                ref='form'
-                type={Login}
-                options={options}
-                />
-                <Button onPress={() => this.onLogin()}>
-                    <Text>Login</Text>
-                </Button>
-                <Text>{this.state.error}</Text>
+            <Container>
+                <Content>
+                    <Header>
+                        <Body>
+                        <Title style={{alignSelf: 'center'}}>Login</Title>
+                        </Body>
+                    </Header>
+
+                    <Form>
+                        <Item floatingLabel>
+                            <Label>Email</Label>
+                            <Input onChangeText={(email) => this.setState({email})}/>
+                        </Item>
+
+                        <Item floatingLabel>
+                            <Label>Password</Label>
+                            <Input
+                                onChangeText={(password) => this.setState({password})}
+                                secureTextEntry={true}/>
+                        </Item>
+                    </Form>
+
+                    <Button full onPress={() => this.onLogin()} style={{alignSelf: 'center', marginTop: 20}}>
+                        <Text>Login </Text>
+                    </Button>
+                </Content>
             </Container>
         );
     }

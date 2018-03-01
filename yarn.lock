@@ -3811,6 +3811,10 @@ react-native-firebase@^3.2.5:
     postinstall-build "^5.0.1"
     prop-types "^15.6.0"
 
+react-native-form-generator@^0.9.9:
+  version "0.9.9"
+  resolved "https://registry.yarnpkg.com/react-native-form-generator/-/react-native-form-generator-0.9.9.tgz#68aae26d1e8dc3e30073ccd7bb298fbdfdce1bca"
+
 react-native-iphone-x-helper@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.0.2.tgz#7dbca530930f7c1ce8633cc8fd13ba94102992e1"

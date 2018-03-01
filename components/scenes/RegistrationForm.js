@@ -1,40 +1,33 @@
-import React, { Component } from 'react';
-import App from '../../App';
-import { Button , Text, Container, Content, Input, Item, Grid, Form, Label } from 'native-base';
+import React, {Component} from 'react';
+import {Button, Text, Container, Content, Input, Item, Label, Form, Title, Body, Header} from 'native-base';
 import firebase from 'react-native-firebase';
+import {StyleSheet} from "react-native";
 
 export default class RegistrationForm extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            email: '',
-            password: '',
             confirmPassword: '',
             error: '',
             invalidPass: true,
-            loading: false
+            loading: false,
+            formData: {},
+            email: '',
+            password: ''
         };
     }
 
-    onClick() {
-
-        //this.onRegister();
-
-        this.props.navigation.navigate('Home');
-        console.log(this.state.password);
-    }
-
-    checkPassword(){
-        if(this.state.password.valueOf() !== this.state.confirmPassword.valueOf()){
+    checkPassword() {
+        if (this.state.password.valueOf() !== this.state.confirmPassword.valueOf()) {
             this.setState({
-               invalidPass: true
+                invalidPass: true
             });
         }
-        else{
+        else {
             this.setState({
-                invalidPass: false 
-             });
+                invalidPass: false
+            });
         }
     }
 
@@ -43,31 +36,54 @@ export default class RegistrationForm extends Component {
             .catch((error) => {
                 console.warn('Error');
             });
+
+        this.props.navigation.navigate('Welcome');
     };
 
     render() {
         return (
             <Container>
                 <Content>
+                    <Header>
+                        <Body>
+                        <Title style={{alignSelf: 'center'}}>Registration</Title>
+                        </Body>
+                    </Header>
                     <Form>
                         <Item floatingLabel>
                             <Label>Email</Label>
-                            <Input onChange={(value) => this.setState({email: value}) }/>
+                            <Input onChangeText={(email) => this.setState({email})}/>
                         </Item>
-                        <Item floatingLabel error={this.state.invalidPass}>
+
+                        <Item floatingLabel>
                             <Label>Password</Label>
-                            <Input onChange={(value) => {this.setState({password: value.toString()}); this.checkPassword() } }/>
+                            <Input
+                                onChangeText={(password) => this.setState({password})}
+                                secureTextEntry={true}/>
                         </Item>
-                        <Item floatingLabel error={this.state.invalidPass}>
-                            <Label>Confirm Password</Label>
-                            <Input onChange={(value) => {this.setState({confirmPassword: value.toString()}); this.checkPassword() } }/>
+
+                        <Item floatingLabel>
+                            <Label>Confirm password Ezt még nem használjuk</Label>
+                            <Input
+                                onChangeText={(confirmPassword) => this.setState({confirmPassword})}
+                                secureTextEntry={true}/>
                         </Item>
-                        <Button full onPress={() => this.onClick() } style={{alignSelf: 'center', marginTop: 20}}>
-                            <Text>Register </Text>
-                        </Button>
                     </Form>
+
+                    <Button full onPress={() => this.onRegister()} style={{alignSelf: 'center', marginTop: 20}}>
+                        <Text>Register </Text>
+                    </Button>
                 </Content>
             </Container>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        justifyContent: 'center',
+        marginTop: 50,
+        padding: 20,
+        backgroundColor: '#ffffff',
+    },
+});
