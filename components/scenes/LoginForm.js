@@ -15,11 +15,17 @@ export default class LoginForm extends Component {
         };
     }
 
+    componentDidMount(){
+        if(firebase.auth().currentUser != null){
+            this.props.navigation.navigate('Home');
+        }
+    }
+
     onLogin() {
         const { email, password } = this.state;
 
         this.setState({error: '', loading: true});
-        firebase.auth().signInWithEmailAndPassword(email, password)
+        firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password)
             .then(this.onLoginSucces.bind(this))
             .catch(() => {
                 this.setState({ error: 'Authentication failed.'});
@@ -39,7 +45,7 @@ export default class LoginForm extends Component {
             loading: false,
             error: ''
         });
-        this.props.navigation.navigate('Game');
+        this.props.navigation.navigate('Home');
     }
 
     render() {
