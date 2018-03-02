@@ -6,28 +6,30 @@ import firebase from 'react-native-firebase';
 export default class GameScreen extends Component {
 
     constructor(props) {
-        firebase.auth().signInAndRetrieveDataWithEmailAndPassword('1234567zzz@gmail.com', '123456');
         super(props);
         this.state = {
             questions: [],
             questionNo: 0,
+            questionSec: 30,
             Question: '',
             Answer_A: '',
             Answer_B: '',
             Answer_C: '',
+            Selected: [false, false, false],
         };
-        this.itemsRef = firebase.firestore().collection("Games").doc("Game1").collection("Questions");
+        this.questionsRef = firebase.firestore().collection("Games").doc("Game1").collection("Questions");
+        this.gameRef = firebase.firestore().collection("Games").doc("Game1").collection("Progress");
     }
 
-    listenForItems(itemsRef) {
-        itemsRef.onSnapshot((querySnapshot) => {
+    getQuestionsFromDatabase(questionsRef) {
+        questionsRef.onSnapshot((querySnapshot) => {
 
             const items = [];
             querySnapshot.forEach((doc) => {
                 const { title } = doc.data();
                 items.push({
                     _key: doc.id,
-                    doc, // DocumentSnapshot
+                    doc,
                     title,
                 });
             });
@@ -35,15 +37,36 @@ export default class GameScreen extends Component {
             this.setState({
                 questions: items,
             });
-            this.initQuestions();
+        });
+    }
+
+    listenForGameProgress(gameRef) {
+        gameRef.onSnapshot((querySnapshot) => {
+
+            const items = [];
+            querySnapshot.forEach((doc) => {
+                const { title } = doc.data();
+                items.push({
+                    _key: doc.id,
+                    doc,
+                    title,
+                });
+            });
+            
+            this.setState({
+                questionNo: items[0].doc._data.QuestionNumber,
+                questionSec: items[0].doc._data.SecondsRemaining,
+            });
+            this.setQuestions();
         });
     }
 
     componentDidMount() {
-        this.listenForItems(this.itemsRef);
+        this.getQuestionsFromDatabase(this.questionsRef);
+        this.listenForGameProgress(this.gameRef);
     }
 
-    initQuestions() {
+    setQuestions() {
         this.setState({
             Question: this.state.questions[this.state.questionNo].doc._data.Question,
             Answer_A: this.state.questions[this.state.questionNo].doc._data.Answer_A,
@@ -54,24 +77,23 @@ export default class GameScreen extends Component {
 
     selectA() {
         this.setState({
-            questionNo: this.state.questionNo + 1,
-        });
-        this.initQuestions();
+            Selected : [true, false, false],
+        })
     }
 
     selectB() {
         this.setState({
-            questionNo: this.state.questionNo + 1,
-        });
-        this.initQuestions();
+            Selected : [false, true, false],
+        })
     }
 
     selectC() {
         this.setState({
-            questionNo: this.state.questionNo + 1,
-        });
-        this.initQuestions();
+            Selected : [false, false, true],
+        })
     }
+
+
 
 
     render() {
@@ -79,14 +101,15 @@ export default class GameScreen extends Component {
             <Container>
                 <Content>
                     <Text>It's Question Time !!!</Text>
+                    <Text>{this.state.questionSec} seconds remaining</Text>
                     <Text>{this.state.Question}</Text>
-                    <Button rounded bordered info onPress={() => this.selectA()} style={{ alignSelf: 'center' }}>
+                    <Button rounded bordered full info={!this.state.Selected[0]} onPress={() => this.selectA()} style={{ alignSelf: 'center' }}>
                         <Text>{this.state.Answer_A}</Text>
                     </Button>
-                    <Button rounded bordered info onPress={() => this.selectB()} style={{ alignSelf: 'center' }}>
+                    <Button rounded bordered full info={!this.state.Selected[1]} onPress={() => this.selectB()} style={{ alignSelf: 'center' }}>
                         <Text>{this.state.Answer_B}</Text>
                     </Button>
-                    <Button rounded bordered info onPress={() => this.selectC()} style={{ alignSelf: 'center' }}>
+                    <Button rounded bordered full info={!this.state.Selected[2]} onPress={() => this.selectC()} style={{ alignSelf: 'center' }}>
                         <Text>{this.state.Answer_C}</Text>
                     </Button>
                 </Content>
