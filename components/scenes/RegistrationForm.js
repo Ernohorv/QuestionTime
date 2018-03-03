@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {Button, Text, Container, Content, Input, Item, Label, Form, Title, Body, Header} from 'native-base';
+import React, { Component } from 'react';
+import { Button, Text, Container, Content, Input, Item, Label, Form, Title, Body } from 'native-base';
 import firebase from 'react-native-firebase';
-import {StyleSheet} from "react-native";
+import { StyleSheet } from "react-native";
 
 export default class RegistrationForm extends Component {
 
@@ -42,36 +42,36 @@ export default class RegistrationForm extends Component {
 
     render() {
         return (
-            <Container>
+            <Container style={{ backgroundColor: 'whitesmoke' }}>
                 <Content>
-                    <Header>
-                        <Body>
-                        <Title style={{alignSelf: 'center'}}>Registration</Title>
-                        </Body>
-                    </Header>
+                    <Text style={{ color: 'crimson', fontSize: 200, alignSelf: 'center', fontFamily: '' }}>Q</Text>
                     <Form>
-                        <Item floatingLabel>
-                            <Label>Email</Label>
-                            <Input onChangeText={(email) => this.setState({email})}/>
+                        <Item floatingLabel style={{ marginTop: 30 }}>
+                            <Label style={{ color: 'crimson' }}>Email</Label>
+                            <Input
+                                onChangeText={(email) => this.setState({ email })}
+                                style={{ color: 'darkgrey' }} />
                         </Item>
 
                         <Item floatingLabel>
-                            <Label>Password</Label>
+                            <Label style={{ color: 'crimson' }}>Password</Label>
                             <Input
-                                onChangeText={(password) => this.setState({password})}
-                                secureTextEntry={true}/>
+                                onChangeText={(password) => this.setState({ password })}
+                                secureTextEntry={true}
+                                style={{ color: 'darkgrey' }} />
                         </Item>
 
                         <Item floatingLabel>
-                            <Label>Confirm password Ezt még nem használjuk</Label>
+                            <Label style={{ color: 'crimson' }}>Confirm password</Label>
                             <Input
-                                onChangeText={(confirmPassword) => this.setState({confirmPassword})}
-                                secureTextEntry={true}/>
+                                onChangeText={(confirmPassword) => this.setState({ confirmPassword })}
+                                secureTextEntry={true}
+                                style={{ color: 'darkgrey' }} />
                         </Item>
                     </Form>
 
-                    <Button full onPress={() => this.onRegister()} style={{alignSelf: 'center', marginTop: 20}}>
-                        <Text>Register </Text>
+                    <Button rounded onPress={() => this.onRegister()} style={{ width: '80%', alignSelf: 'center', justifyContent: 'center', backgroundColor: 'white', marginTop: 50, marginBottom: 15 }}>
+                        <Text style={{ color: 'crimson' }}>Sign Up</Text>
                     </Button>
                 </Content>
             </Container>

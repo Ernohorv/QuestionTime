@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import App from '../../App';
-import { Button, Text, Container, Content, Thumbnail} from 'native-base';
+import { Button, Text, Container, Content, Thumbnail } from 'native-base';
 import firebase from 'react-native-firebase';
 
 export default class HomeScreen extends Component {
@@ -23,19 +23,24 @@ export default class HomeScreen extends Component {
 
     render() {
         return (
-            <Container>
+            <Container style={{ backgroundColor: 'crimson' }}>
                 <Content>
-                    <Text>Next Game: Majd egyszer</Text>
-                    <Button onPress={() => this.startGame()}>
-                        <Text>Start game</Text>
+                    <Thumbnail large
+                        source={{ uri: 'https://pbs.twimg.com/profile_images/649344745328607232/XsUnHdyH_400x400.jpg' }}
+                        style={{ alignSelf: 'center', marginTop: 120 }} />
+                    <Text style={{ alignSelf: 'center', color: 'white', marginTop: 15, fontSize: 20 }}>Alexander Hamilton</Text>
+                    <Button rounded bordered
+                        onPress={() => this.startGame()}
+                        style={{ marginTop: 150, width: '80%', alignSelf: 'center', justifyContent: 'center', borderColor: 'white' }}>
+                        <Text style={{ color: 'white' }}>Start game</Text>
                     </Button>
-                    <Text>Alexander Hamilton</Text>
-                    <Thumbnail large source={{ uri: 'https://pbs.twimg.com/profile_images/649344745328607232/XsUnHdyH_400x400.jpg' }} />
-                    <Button onPress={() => this.logOut()}>
-                        <Text>Log out</Text>
+                    <Button rounded bordered
+                        onPress={() => this.logOut()}
+                        style={{ marginTop: 30, marginBottom: 15, width: '80%', alignSelf: 'center', justifyContent: 'center', borderColor: 'white' }}>
+                        <Text style={{ color: 'white' }}>Log out</Text>
                     </Button>
                 </Content>
-            </Container>
+            </Container >
         );
     }
 }

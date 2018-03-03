@@ -52,7 +52,7 @@ export default class GameScreen extends Component {
                     title,
                 });
             });
-            
+
             this.setState({
                 questionNo: items[0].doc._data.QuestionNumber,
                 questionSec: items[0].doc._data.SecondsRemaining,
@@ -77,19 +77,19 @@ export default class GameScreen extends Component {
 
     selectA() {
         this.setState({
-            Selected : [true, false, false],
+            Selected: [true, false, false],
         })
     }
 
     selectB() {
         this.setState({
-            Selected : [false, true, false],
+            Selected: [false, true, false],
         })
     }
 
     selectC() {
         this.setState({
-            Selected : [false, false, true],
+            Selected: [false, false, true],
         })
     }
 
@@ -98,18 +98,17 @@ export default class GameScreen extends Component {
 
     render() {
         return (
-            <Container>
+            <Container style={{ backgroundColor: 'whitesmoke' }}>
                 <Content>
-                    <Text>It's Question Time !!!</Text>
-                    <Text>{this.state.questionSec} seconds remaining</Text>
-                    <Text>{this.state.Question}</Text>
-                    <Button rounded info={!this.state.Selected[0]} onPress={() => this.selectA()} style={{ alignSelf: 'center', justifyContent: 'center', width: '80%', marginBottom: 15, marginTop:80}}>
+                    <Text style={{ alignSelf: 'center', marginTop: 30, fontSize: 64, color: 'darkslategrey' }}>{this.state.questionSec}</Text>
+                    <Text style={{ alignSelf: 'center', marginTop: 50, fontSize: 24, color: 'darkslategrey' }}>{this.state.Question}</Text>
+                    <Button rounded light={!this.state.Selected[0]} danger={this.state.Selected[0]} onPress={() => this.selectA()} style={{ alignSelf: 'center', justifyContent: 'flex-start', width: '80%', marginBottom: 15, marginTop: 15 }}>
                         <Text>{this.state.Answer_A}</Text>
                     </Button>
-                    <Button rounded info={!this.state.Selected[1]} onPress={() => this.selectB()} style={{ alignSelf: 'center', justifyContent: 'center', width: '80%', marginBottom: 15}}>
+                    <Button rounded light={!this.state.Selected[1]} danger={this.state.Selected[1]} onPress={() => this.selectB()} style={{ alignSelf: 'center', justifyContent: 'flex-start', width: '80%', marginBottom: 15 }}>
                         <Text>{this.state.Answer_B}</Text>
                     </Button>
-                    <Button rounded info={!this.state.Selected[2]} onPress={() => this.selectC()} style={{ alignSelf: 'center', justifyContent: 'center', width: '80%'}}>
+                    <Button rounded light={!this.state.Selected[2]} danger={this.state.Selected[2]} onPress={() => this.selectC()} style={{ alignSelf: 'center', justifyContent: 'flex-start', width: '80%', marginBottom: 15 }}>
                         <Text>{this.state.Answer_C}</Text>
                     </Button>
                 </Content>
