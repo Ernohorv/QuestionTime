@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 import App from '../../App';
-import { Button, Text, Container, Content, Thumbnail } from 'native-base';
+import { Button, Text, Container, Content, Thumbnail} from 'native-base';
 import firebase from 'react-native-firebase';
 
 export default class HomeScreen extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
 
         };
     }
 
-    startGame(){
+    startGame() {
         this.props.navigation.navigate('Game');
     }
 
-    logOut(){
+    logOut() {
         firebase.auth().signOut();
         this.props.navigation.navigate('Welcome');
     }
@@ -30,7 +30,7 @@ export default class HomeScreen extends Component {
                         <Text>Start game</Text>
                     </Button>
                     <Text>Alexander Hamilton</Text>
-                    <Thumbnail large source={{uri: 'https://pbs.twimg.com/profile_images/649344745328607232/XsUnHdyH_400x400.jpg'}}/>
+                    <Thumbnail large source={{ uri: 'https://pbs.twimg.com/profile_images/649344745328607232/XsUnHdyH_400x400.jpg' }} />
                     <Button onPress={() => this.logOut()}>
                         <Text>Log out</Text>
                     </Button>

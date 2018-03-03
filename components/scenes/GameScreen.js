@@ -103,13 +103,13 @@ export default class GameScreen extends Component {
                     <Text>It's Question Time !!!</Text>
                     <Text>{this.state.questionSec} seconds remaining</Text>
                     <Text>{this.state.Question}</Text>
-                    <Button rounded bordered full info={!this.state.Selected[0]} onPress={() => this.selectA()} style={{ alignSelf: 'center' }}>
+                    <Button rounded info={!this.state.Selected[0]} onPress={() => this.selectA()} style={{ alignSelf: 'center', justifyContent: 'center', width: '80%', marginBottom: 15, marginTop:80}}>
                         <Text>{this.state.Answer_A}</Text>
                     </Button>
-                    <Button rounded bordered full info={!this.state.Selected[1]} onPress={() => this.selectB()} style={{ alignSelf: 'center' }}>
+                    <Button rounded info={!this.state.Selected[1]} onPress={() => this.selectB()} style={{ alignSelf: 'center', justifyContent: 'center', width: '80%', marginBottom: 15}}>
                         <Text>{this.state.Answer_B}</Text>
                     </Button>
-                    <Button rounded bordered full info={!this.state.Selected[2]} onPress={() => this.selectC()} style={{ alignSelf: 'center' }}>
+                    <Button rounded info={!this.state.Selected[2]} onPress={() => this.selectC()} style={{ alignSelf: 'center', justifyContent: 'center', width: '80%'}}>
                         <Text>{this.state.Answer_C}</Text>
                     </Button>
                 </Content>
