@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import {
-    View, StyleSheet, Button, Text
+    View,
+    StyleSheet,
+    Button,
+    Text,
+    BackHandler,
+    BackAndroid
 } from 'react-native';
 
 import firebase from 'react-native-firebase';
 import { Fab, Icon, Container, Header, Input, Content, Card, CardItem, Body, Form, Item, Label } from 'native-base';
 
 import {
-    StackNavigator,
+    StackNavigator, withNavigation, NavigationActions
 } from 'react-navigation';
 
 import LoginForm  from './components/scenes/LoginForm';
@@ -31,7 +36,7 @@ const RootStack = StackNavigator(
 export default class App extends Component {
     constructor(props){
         super(props);
-        this.state = { loading: true };
+        this.state = { loading: true};
     }
     
 
@@ -56,6 +61,7 @@ export default class App extends Component {
     ComponentWillUnMount() {
 
         this.authSubscription();
+        BackHandler.removeEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
     }
 
     componentDidMount() {
@@ -65,25 +71,17 @@ export default class App extends Component {
                 user,
             });
         });
+
+        BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
     }
+
+    onBackButtonPressAndroid = () => {
+            BackHandler.exitApp();
+    };
 
     render() {
         return (
-            /*<View>
-                <Button title="Login" onPress={Actions.login()}>
-                    <Text>hi</Text>
-                </Button>
-            </View>*/
-            <RootStack />
-
-            
-            /*<Container>
-                <Header>Registration</Header>
-                <Content>
-                    <Button full onPress={() => this.registrationForm.bind(this)}></Button>
-                    <Button full onPress={() => this.loginForm.bind(this)}></Button>
-                </Content>
-            </Container>*/
+            <RootStack/>
         );
     }
 }
