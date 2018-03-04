@@ -71,14 +71,16 @@ export default class GameScreen extends Component {
 
             const items = [];
             querySnapshot.forEach((doc) => {
-                const {title} = doc.data();
+                const { title } = doc.data();
                 items.push({
                     _key: doc.id,
                     doc,
                     title,
                 });
-                this.setState({start: items[0].doc._data.Ready});
-
+                if (items[0].doc._data.Ready) {
+                    this.setState({ start: items[0].doc._data.Ready })
+                    let timerID = setInterval(() => this.tick(), 1000); //this starts the interval
+                }
             });
         });
     }
@@ -123,13 +125,6 @@ export default class GameScreen extends Component {
     }
 
     render() {
-        if(this.state.start) {
-            while(this.state.counter !== 1000) {
-                let timer = setInterval(this.tick(), 1000);
-                this.setState({timer});
-            }
-
-        }
         return (
             <Container style={{ backgroundColor: 'whitesmoke' }}>
                 <Content>
