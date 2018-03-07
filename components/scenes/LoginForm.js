@@ -15,12 +15,6 @@ export default class LoginForm extends Component {
         };
     }
 
-    componentDidMount() {
-        if (firebase.auth().currentUser != null) {
-            this.props.navigation.navigate('Home');
-        }
-    }
-
     onLogin() {
         const { email, password } = this.state;
 
