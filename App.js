@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
 import {
-    View,
-    StyleSheet,
-    Button,
-    Text,
     BackHandler,
-    BackAndroid
 } from 'react-native';
 
 import firebase from 'react-native-firebase';
 import { Fab, Icon, Container, Header, Input, Content, Card, CardItem, Body, Form, Item, Label } from 'native-base';
 
 import {
-    StackNavigator, withNavigation, NavigationActions
+    StackNavigator
 } from 'react-navigation';
 
 import LoginForm from './components/scenes/LoginForm';
@@ -28,7 +23,6 @@ const RootStack = StackNavigator(
         Home: { screen: HomeScreen, navigationOptions: { header: null } },
         Game: { screen: GameScreen, navigationOptions: { header: null } },
         Welcome: { screen: WelcomeScreen, navigationOptions: { header: null } },
-
     },
     { initialRouteName: 'Welcome' },
 );
@@ -38,7 +32,6 @@ export default class App extends Component {
         super(props);
         this.state = { loading: true };
     }
-
     /**
      * Stop listening for authentication state changes
      * when the component unmounts.
@@ -70,12 +63,3 @@ export default class App extends Component {
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        justifyContent: 'center',
-        marginTop: 50,
-        padding: 20,
-        backgroundColor: '#ffffff',
-    },
-});

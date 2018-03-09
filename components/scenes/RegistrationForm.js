@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Button, Text, Container, Content, Input, Item, Label, Form, Title, Body } from 'native-base';
+import { Button, Text, Container, Content, Input, Item, Label, Form, Title } from 'native-base';
 import firebase from 'react-native-firebase';
-import { StyleSheet } from "react-native";
+import RegistrationStyle from '../styles/RegistrationStyle';
 
 export default class RegistrationForm extends Component {
 
@@ -44,7 +44,7 @@ export default class RegistrationForm extends Component {
         return (
             <Container style={{ backgroundColor: 'whitesmoke' }}>
                 <Content>
-                    <Text style={{ color: 'crimson', fontSize: 200, alignSelf: 'center', fontFamily: '' }}>Q</Text>
+                    <Text style={RegistrationStyle.titleText}>Q</Text>
                     <Form>
                         <Item floatingLabel style={{ marginTop: 30 }}>
                             <Label style={{ color: 'crimson' }}>Email</Label>
@@ -70,7 +70,11 @@ export default class RegistrationForm extends Component {
                         </Item>
                     </Form>
 
-                    <Button rounded onPress={() => this.onRegister()} style={{ width: '80%', alignSelf: 'center', justifyContent: 'center', backgroundColor: 'white', marginTop: 50, marginBottom: 15 }}>
+                    <Button
+                        rounded
+                        onPress={() =>
+                            this.onRegister()}
+                        style={RegistrationStyle.registerButton}>
                         <Text style={{ color: 'crimson' }}>Sign Up</Text>
                     </Button>
                 </Content>
@@ -78,12 +82,3 @@ export default class RegistrationForm extends Component {
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        justifyContent: 'center',
-        marginTop: 50,
-        padding: 20,
-        backgroundColor: '#ffffff',
-    },
-});

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import App from '../../App';
+import GameScreenStyle from '../styles/GameScreenStyle'
 import { Button, Text, Container, Content } from 'native-base';
 import firebase from 'react-native-firebase';
+import HomeScreenStyle from "../styles/HomeScreenStyle";
 
 export default class GameScreen extends Component {
-
 
     constructor(props) {
         super(props);
@@ -131,14 +131,14 @@ export default class GameScreen extends Component {
         this.setState({
             counter: this.state.counter - 1,
         });
-        if (this.state.counter == 0) {
+        if (this.state.counter === 0) {
             this.setState({
                 noTime: true,
             });
             clearInterval(this.state.timerID);
-            if (this.state.Selected[0] == this.state.Correct ||
-                this.state.Selected[1] == this.state.Correct ||
-                this.state.Selected[2] == this.state.Correct) {
+            if (this.state.Selected[0] === this.state.Correct ||
+                this.state.Selected[1] === this.state.Correct ||
+                this.state.Selected[2] === this.state.Correct) {
                 this.setState({
                     points: this.state.points + 1,
                 })
@@ -149,19 +149,32 @@ export default class GameScreen extends Component {
     render() {
         if (this.state.endGame) {
             return (
-                <Container style={{ backgroundColor: 'whitesmoke' }}>
+                <Container
+                    style={{
+                        backgroundColor: 'whitesmoke' }}>
                     <Content>
-                        <Text style={{ alignSelf: 'center', marginTop: 30, fontSize: 36, color: 'darkslategrey' }}>Score</Text>
-                        <Text style={{ alignSelf: 'center', marginTop: 50, fontSize: 120, color: 'darkslategrey' }}>{this.state.points}</Text>
+                        <Text
+                            style={GameScreenStyle.scoreText}>
+                            Score
+                        </Text>
+                        <Text
+                            style={HomeScreenStyle.pointText}>
+                            {this.state.points}
+                            </Text>
                     </Content>
                 </Container>
             );
         }
         else if (!this.state.start) {
             return (
-                <Container style={{ backgroundColor: 'whitesmoke' }}>
+                <Container
+                    style={{
+                        backgroundColor: 'whitesmoke' }}>
                     <Content>
-                        <Text style={{ alignSelf: 'center', marginTop: 30, fontSize: 64, color: 'crimson' }}>Soon...</Text>
+                        <Text
+                            style={GameScreenStyle.soonText}>
+                            Soon...
+                        </Text>
                     </Content>
                 </Container>
             );
@@ -169,18 +182,51 @@ export default class GameScreen extends Component {
         else {
             if (this.state.noTime) {
                 return (
-                    <Container style={{ backgroundColor: 'whitesmoke' }}>
+                    <Container
+                        style={{
+                            backgroundColor: 'whitesmoke' }}>
                         <Content>
-                            <Text style={{ alignSelf: 'center', marginTop: 30, fontSize: 36, color: 'darkslategrey' }}>The correct answer is...</Text>
-                            <Text style={{ alignSelf: 'center', marginTop: 50, fontSize: 24, color: 'darkslategrey' }}>{this.state.Question}</Text>
-                            <Button rounded light={!this.state.Selected[0]} warning={this.state.Selected[0] && this.state.Correct != 0} success={this.state.Correct == 0} style={{ alignSelf: 'center', justifyContent: 'flex-start', width: '80%', marginBottom: 15, marginTop: 15 }}>
-                                <Text>{this.state.Answer_A}</Text>
+                            <Text
+                                style={
+                                    GameScreenStyle.correctText}>
+                                The correct answer is...
+                            </Text>
+                            <Text
+                                style={GameScreenStyle.questionText}>
+                                {this.state.Question}
+                                </Text>
+                            <Button
+                                rounded
+                                light={!this.state.Selected[0]}
+                                warning={this.state.Selected[0] &&
+                                this.state.Correct !== 0}
+                                success={this.state.Correct === 0}
+                                style={GameScreenStyle.answerAtext}>
+                                <Text>
+                                    {this.state.Answer_A}
+                                    </Text>
                             </Button>
-                            <Button rounded light={!this.state.Selected[1]} warning={this.state.Selected[1] && this.state.Correct != 1} success={this.state.Correct == 1} style={{ alignSelf: 'center', justifyContent: 'flex-start', width: '80%', marginBottom: 15 }}>
-                                <Text>{this.state.Answer_B}</Text>
+                            <Button
+                                rounded
+                                light={!this.state.Selected[1]}
+                                warning={this.state.Selected[1] &&
+                                this.state.Correct !== 1}
+                                success={this.state.Correct === 1}
+                                style={GameScreenStyle.answerText}>
+                                <Text>
+                                    {this.state.Answer_B}
+                                    </Text>
                             </Button>
-                            <Button rounded light={!this.state.Selected[2]} warning={this.state.Selected[2] && this.state.Correct != 2} success={this.state.Correct == 2} style={{ alignSelf: 'center', justifyContent: 'flex-start', width: '80%', marginBottom: 15 }}>
-                                <Text>{this.state.Answer_C}</Text>
+                            <Button
+                                rounded
+                                light={!this.state.Selected[2]}
+                                warning={this.state.Selected[2] &&
+                                this.state.Correct !== 2}
+                                success={this.state.Correct === 2}
+                                style={GameScreenStyle.answerText}>
+                                <Text>
+                                    {this.state.Answer_C}
+                                    </Text>
                             </Button>
                         </Content>
                     </Container>
@@ -188,17 +234,44 @@ export default class GameScreen extends Component {
             }
             else {
                 return (
-                    <Container style={{ backgroundColor: 'whitesmoke' }}>
+                    <Container
+                        style={{
+                            backgroundColor: 'whitesmoke' }}>
                         <Content>
-                            <Text style={{ alignSelf: 'center', marginTop: 30, fontSize: 64, color: 'darkslategrey' }}>{this.state.counter}</Text>
-                            <Text style={{ alignSelf: 'center', marginTop: 50, fontSize: 24, color: 'darkslategrey' }}>{this.state.Question}</Text>
-                            <Button rounded light={!this.state.Selected[0]} danger={this.state.Selected[0]} onPress={() => this.selectA()} style={{ alignSelf: 'center', justifyContent: 'flex-start', width: '80%', marginBottom: 15, marginTop: 15 }}>
-                                <Text>{this.state.Answer_A}</Text>
+                            <Text
+                                style={GameScreenStyle.counterText}>
+                                {this.state.counter}
+                                </Text>
+                            <Text
+                                style={GameScreenStyle.questionText}>
+                                {this.state.Question}
+                                </Text>
+                            <Button
+                                rounded
+                                light={!this.state.Selected[0]}
+                                danger={this.state.Selected[0]}
+                                onPress={() => this.selectA()}
+                                style={GameScreenStyle.answerAtext}>
+                                <Text>
+                                    {this.state.Answer_A}
+                                    </Text>
                             </Button>
-                            <Button rounded light={!this.state.Selected[1]} danger={this.state.Selected[1]} onPress={() => this.selectB()} style={{ alignSelf: 'center', justifyContent: 'flex-start', width: '80%', marginBottom: 15 }}>
-                                <Text>{this.state.Answer_B}</Text>
+                            <Button
+                                rounded
+                                light={!this.state.Selected[1]}
+                                danger={this.state.Selected[1]}
+                                onPress={() => this.selectB()}
+                                style={GameScreenStyle.answerText}>
+                                <Text>
+                                    {this.state.Answer_B}
+                                    </Text>
                             </Button>
-                            <Button rounded light={!this.state.Selected[2]} danger={this.state.Selected[2]} onPress={() => this.selectC()} style={{ alignSelf: 'center', justifyContent: 'flex-start', width: '80%', marginBottom: 15 }}>
+                            <Button
+                                rounded
+                                light={!this.state.Selected[2]}
+                                danger={this.state.Selected[2]}
+                                onPress={() => this.selectC()}
+                                style={GameScreenStyle.answerText}>
                                 <Text>{this.state.Answer_C}</Text>
                             </Button>
                         </Content>
@@ -208,4 +281,3 @@ export default class GameScreen extends Component {
         }
     }
 }
-
