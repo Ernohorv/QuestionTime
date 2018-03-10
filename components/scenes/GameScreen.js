@@ -19,6 +19,7 @@ export default class GameScreen extends Component {
             Selected: [false, false, false],
             start: false,
             counter: 10,
+            counter2: 5,
             noTime: false,
             timerID: null,
             endGame: false,
@@ -62,7 +63,7 @@ export default class GameScreen extends Component {
             });
 
             this.setState({
-                questionNo: items[0].doc._data.QuestionNumber,
+                //questionNo: items[0].doc._data.QuestionNumber,
             });
             this.setQuestions();
         });
@@ -80,7 +81,7 @@ export default class GameScreen extends Component {
                     title,
                 });
                 this.setState({ start: items[0].doc._data.Ready })
-                this.setState({ endGame: items[0].doc._data.EndGame })
+                //this.setState({ endGame: items[0].doc._data.EndGame })
                 if (items[0].doc._data.Ready) {
                     this.setState({
                         counter: 10,
@@ -129,19 +130,42 @@ export default class GameScreen extends Component {
 
     tick() {
         this.setState({
-            counter: this.state.counter - 1,
+            counter : this.state.counter - 1,
+            counter2: this.state.counter2 - 1,
         });
-        if (this.state.counter === 0) {
-            this.setState({
-                noTime: true,
-            });
-            clearInterval(this.state.timerID);
-            if (this.state.Selected[0] === this.state.Correct ||
-                this.state.Selected[1] === this.state.Correct ||
-                this.state.Selected[2] === this.state.Correct) {
+        if (this.noTime) {
+            if(this.state.counter2 == 0){
                 this.setState({
-                    points: this.state.points + 1,
+                    counter: 10,
+                    noTime: false,
+                    Selected: [false, false, false],
+                    questionNo: this.state.questionNo + 1,
                 })
+            }
+        }
+        else {
+            if (this.state.counter == 0) {
+                if (this.state.Selected[0] == this.state.Correct ||
+                    this.state.Selected[1] == this.state.Correct ||
+                    this.state.Selected[2] == this.state.Correct) {
+                    this.setState({
+                        points: this.state.points + 1,
+                        counter2 : 5,                        
+                        noTime: true,
+                    })
+                }
+                else {
+                    this.setState({
+                        endGame: true,
+                    });
+                    clearInterval(this.state.timerID);
+                }
+                if (this.questionNo == this.state.questions.length - 1) {
+                    this.setState({
+                        endGame: true,
+                    });
+                    clearInterval(this.state.timerID);
+                }
             }
         }
     }
@@ -151,7 +175,8 @@ export default class GameScreen extends Component {
             return (
                 <Container
                     style={{
-                        backgroundColor: 'whitesmoke' }}>
+                        backgroundColor: 'whitesmoke'
+                    }}>
                     <Content>
                         <Text
                             style={GameScreenStyle.scoreText}>
@@ -159,8 +184,8 @@ export default class GameScreen extends Component {
                         </Text>
                         <Text
                             style={HomeScreenStyle.pointText}>
-                            {this.state.points}
-                            </Text>
+                            {this.state.points} / {this.state.questions.length}
+                        </Text>
                     </Content>
                 </Container>
             );
@@ -169,7 +194,8 @@ export default class GameScreen extends Component {
             return (
                 <Container
                     style={{
-                        backgroundColor: 'whitesmoke' }}>
+                        backgroundColor: 'whitesmoke'
+                    }}>
                     <Content>
                         <Text
                             style={GameScreenStyle.soonText}>
@@ -184,49 +210,51 @@ export default class GameScreen extends Component {
                 return (
                     <Container
                         style={{
-                            backgroundColor: 'whitesmoke' }}>
+                            backgroundColor: 'whitesmoke'
+                        }}>
                         <Content>
                             <Text
                                 style={
                                     GameScreenStyle.correctText}>
                                 The correct answer is...
+                                {this.state.counter2}
                             </Text>
                             <Text
                                 style={GameScreenStyle.questionText}>
                                 {this.state.Question}
-                                </Text>
+                            </Text>
                             <Button
                                 rounded
                                 light={!this.state.Selected[0]}
                                 warning={this.state.Selected[0] &&
-                                this.state.Correct !== 0}
-                                success={this.state.Correct === 0}
+                                    this.state.Correct != 0}
+                                success={this.state.Correct == 0}
                                 style={GameScreenStyle.answerAtext}>
                                 <Text>
                                     {this.state.Answer_A}
-                                    </Text>
+                                </Text>
                             </Button>
                             <Button
                                 rounded
                                 light={!this.state.Selected[1]}
                                 warning={this.state.Selected[1] &&
-                                this.state.Correct !== 1}
-                                success={this.state.Correct === 1}
+                                    this.state.Correct != 1}
+                                success={this.state.Correct == 1}
                                 style={GameScreenStyle.answerText}>
                                 <Text>
                                     {this.state.Answer_B}
-                                    </Text>
+                                </Text>
                             </Button>
                             <Button
                                 rounded
                                 light={!this.state.Selected[2]}
                                 warning={this.state.Selected[2] &&
-                                this.state.Correct !== 2}
-                                success={this.state.Correct === 2}
+                                    this.state.Correct != 2}
+                                success={this.state.Correct == 2}
                                 style={GameScreenStyle.answerText}>
                                 <Text>
                                     {this.state.Answer_C}
-                                    </Text>
+                                </Text>
                             </Button>
                         </Content>
                     </Container>
@@ -236,16 +264,17 @@ export default class GameScreen extends Component {
                 return (
                     <Container
                         style={{
-                            backgroundColor: 'whitesmoke' }}>
+                            backgroundColor: 'whitesmoke'
+                        }}>
                         <Content>
                             <Text
                                 style={GameScreenStyle.counterText}>
                                 {this.state.counter}
-                                </Text>
+                            </Text>
                             <Text
                                 style={GameScreenStyle.questionText}>
                                 {this.state.Question}
-                                </Text>
+                            </Text>
                             <Button
                                 rounded
                                 light={!this.state.Selected[0]}
@@ -254,7 +283,7 @@ export default class GameScreen extends Component {
                                 style={GameScreenStyle.answerAtext}>
                                 <Text>
                                     {this.state.Answer_A}
-                                    </Text>
+                                </Text>
                             </Button>
                             <Button
                                 rounded
@@ -264,7 +293,7 @@ export default class GameScreen extends Component {
                                 style={GameScreenStyle.answerText}>
                                 <Text>
                                     {this.state.Answer_B}
-                                    </Text>
+                                </Text>
                             </Button>
                             <Button
                                 rounded
