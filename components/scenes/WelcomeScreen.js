@@ -15,35 +15,45 @@ export default class WelcomeScreen extends Component {
             this.props.navigation.navigate('Home');
         }
         else {
-            this.props.navigation.navigate('Login')
+            this.props.navigation.navigate('Login');
         }
     }
 
-    render() {
-        return (
-            <Container style={{ backgroundColor: 'crimson' }}>
-                <Content>
-                    <View>
-                        <Text style={WelcomeStyle.titleText}>Q</Text>
-                        <Button
-                            rounded
-                            bordered
-                            onPress={() =>
-                                this.props.navigation.navigate('Registration')}
-                            style={WelcomeStyle.signUpButton}>
-                            <Text style={{ color: 'white' }}>Sign Up</Text>
-                        </Button>
+    highScoreButon() {
+        this.props.navigation.navigate('HighScore');
+    }
 
-                        <Button
-                            rounded
-                            onPress={() =>
-                                this.loginButton()}
-                            style={WelcomeStyle.loginButton}>
-                            <Text style={{ color: 'crimson' }}>Login</Text>
-                        </Button>
-                    </View>
-                </Content>
-            </Container>
-        );
+    render() {
+        return <Container style={{backgroundColor: 'crimson'}}>
+            <Content>
+                <View>
+                    <Text style={WelcomeStyle.titleText}>Q</Text>
+                    <Button
+                        rounded
+                        bordered
+                        onPress={() =>
+                            this.props.navigation.navigate('Registration')}
+                        style={WelcomeStyle.signUpButton}>
+                        <Text style={{color: 'white'}}>Sign Up</Text>
+                    </Button>
+
+                    <Button
+                        rounded
+                        onPress={() =>
+                            this.loginButton()}
+                        style={WelcomeStyle.loginButton}>
+                        <Text style={{color: 'crimson'}}>Login</Text>
+                    </Button>
+
+                    <Button
+                        rounded
+                        onPress={() =>
+                            this.highScoreButon()}
+                        style={WelcomeStyle.highScoreButton}>
+                        <Text style={{color: 'crimson'}}>HighScore</Text>
+                    </Button>
+                </View>
+            </Content>
+        </Container>;
     }
 }

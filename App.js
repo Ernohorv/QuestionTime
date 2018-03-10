@@ -15,6 +15,7 @@ import RegistrationForm from './components/scenes/RegistrationForm';
 import HomeScreen from './components/scenes/HomeScreen';
 import GameScreen from './components/scenes/GameScreen';
 import WelcomeScreen from "./components/scenes/WelcomeScreen";
+import HighScoreSceen from "./components/scenes/HighScoreSceen";
 
 const RootStack = StackNavigator(
     {
@@ -23,6 +24,7 @@ const RootStack = StackNavigator(
         Home: { screen: HomeScreen, navigationOptions: { header: null } },
         Game: { screen: GameScreen, navigationOptions: { header: null } },
         Welcome: { screen: WelcomeScreen, navigationOptions: { header: null } },
+        HighScore: { screen: HighScoreSceen, navigationOptions: { header: null} },
     },
     { initialRouteName: 'Welcome' },
 );

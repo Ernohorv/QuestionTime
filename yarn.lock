@@ -3822,11 +3822,21 @@ react-native-keyboard-aware-scroll-view@0.4.2:
     prop-types "^15.6.0"
     react-native-iphone-x-helper "^1.0.1"
 
+react-native-leaderboard@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-leaderboard/-/react-native-leaderboard-1.0.4.tgz#8c4f89856c8b75cd71a26274b8eb19d21088f76d"
+  dependencies:
+    prop-types "^15.6.0"
+
 react-native-safe-area-view@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-view/-/react-native-safe-area-view-0.7.0.tgz#38f5ab9368d6ef9e5d18ab64212938af3ec39421"
   dependencies:
     hoist-non-react-statics "^2.3.1"
+
+react-native-sound@^0.10.9:
+  version "0.10.9"
+  resolved "https://registry.yarnpkg.com/react-native-sound/-/react-native-sound-0.10.9.tgz#6b00b0f4afd017cde09fbb9d171df1b5d5b851a8"
 
 react-native-tab-view@^0.0.74:
   version "0.0.74"

@@ -24,4 +24,12 @@ export default StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: 'white'
     },
+
+    highScoreButton: {
+        width: '80%',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'whitesmoke',
+        marginTop: 10
+    },
 });
