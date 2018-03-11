@@ -31,11 +31,13 @@ export default class GameScreen extends Component {
             timerID: null,
             endGame: false,
             points: 0,
-            highScore: [],
+            highScore: 0,
         };
+        var uuid = firebase.auth().currentUser.uid;
         this.questionsRef = firebase.firestore().collection("Games").doc("Game1").collection("Questions");
         this.gameRef = firebase.firestore().collection("Games").doc("Game1").collection("Progress");
         this.startRef = firebase.firestore().collection("Start").doc("xJZq9ld1rnbDrHx7jthl").collection("Ready");
+        this.userRef = firebase.firestore().collection("Users").doc(uuid);
     }
 
     getQuestionsFromDatabase(questionsRef) {
@@ -103,10 +105,19 @@ export default class GameScreen extends Component {
         });
     }
 
+    getUserData(userRef) {
+        userRef.onSnapshot((querySnapshot) => {
+            this.setState({
+                highScore: querySnapshot.data().score,
+            });
+        });
+    }
+
     componentDidMount() {
         this.getQuestionsFromDatabase(this.questionsRef);
         this.listenForGameProgress(this.gameRef);
         this.isReady(this.startRef);
+        this.getUserData(this.userRef);
     }
 
     setQuestions() {
@@ -137,6 +148,12 @@ export default class GameScreen extends Component {
         })
     }
 
+    updateHighScore() {
+        this.userRef.update({
+            score: this.state.highScore + this.state.points,
+        });
+    }
+
     tick() {
         this.setState({
             counter: this.state.counter - 1,
@@ -165,18 +182,24 @@ export default class GameScreen extends Component {
                     endGame: true,
                 });
                 clearInterval(this.state.timerID);
+                this.updateHighScore();
             }
             if (this.state.questionNo === this.state.questions.length) {
                 this.setState({
                     endGame: true,
                 });
                 clearInterval(this.state.timerID);
+                this.updateHighScore();
             }
 
             if (this.state.questionNo !== this.state.questions.length)
                 this.setQuestions();
 
         }
+    }
+
+    homeScreen() {
+        this.props.navigation.navigate('Home');
     }
 
     render() {
@@ -192,9 +215,22 @@ export default class GameScreen extends Component {
                             Score
                         </Text>
                         <Text
-                            style={HomeScreenStyle.pointText}>
+                            style={GameScreenStyle.pointText}>
                             {this.state.points} / {this.state.questions.length}
                         </Text>
+                        <Button
+                            rounded
+                            bordered
+                            onPress={() => this.homeScreen()}
+                            style={
+                                GameScreenStyle.homeButton}>
+                            <Text
+                                style={{
+                                    color: 'crimson'
+                                }}>
+                                Back to home
+                    </Text>
+                        </Button>
                     </Content>
                 </Container>
             );

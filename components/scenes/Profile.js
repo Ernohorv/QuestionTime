@@ -7,7 +7,7 @@ export default class LoginForm extends Component {
 
     constructor(props) {
         super(props);
-        this.state= {
+        this.state = {
             userName: '',
         }
         var uuid = firebase.auth().currentUser.uid;
@@ -21,9 +21,13 @@ export default class LoginForm extends Component {
         this.props.navigation.navigate('Home');
     }
 
+    goBack() {
+        this.props.navigation.navigate('Home');
+    }
+
     render() {
 
-        return(
+        return (
             <Container>
                 <Content>
                     <Form>
@@ -43,6 +47,13 @@ export default class LoginForm extends Component {
                             this.changeName()}
                         style={LoginStyle.loginButton}>
                         <Text style={{ color: 'crimson' }}>Change</Text>
+                    </Button>
+                    <Button
+                        rounded
+                        onPress={() =>
+                            this.goBack()}
+                        style={LoginStyle.loginButton}>
+                        <Text style={{ color: 'crimson' }}>Go back</Text>
                     </Button>
                 </Content>
             </Container>

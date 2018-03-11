@@ -6,14 +6,14 @@ export default StyleSheet.create({
         alignSelf: 'center',
         marginTop: 30,
         fontSize: 36,
-        color: 'darkslategrey'
+        color: 'black'
     },
 
     pointText: {
         alignSelf: 'center',
         marginTop: 50,
         fontSize: 120,
-        color: 'darkslategrey'
+        color: 'black'
     },
 
     soonText: {
@@ -57,5 +57,13 @@ export default StyleSheet.create({
         marginTop: 30,
         fontSize: 64,
         color: 'darkslategrey'
-    }
+    },
+
+    homeButton: {
+        marginTop: 200,
+        width: '80%',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        borderColor: 'crimson'
+    },
 });
