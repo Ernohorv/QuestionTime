@@ -20,6 +20,10 @@ export default class HomeScreen extends Component {
         this.props.navigation.navigate('Welcome');
     }
 
+    profilPage() {
+        this.props.navigation.navigate('Profile');
+    }
+
     render() {
         return <Container
             style=
@@ -44,6 +48,18 @@ export default class HomeScreen extends Component {
                         style={{
                             color: 'white'}}>
                         Start game
+                    </Text>
+                </Button>
+                <Button
+                    rounded
+                    bordered
+                    onPress={() => this.profilPage()}
+                    style={
+                        HomeScreenStyle.logOutButton}>
+                    <Text
+                        style={{
+                            color: 'white'}}>
+                        Profile
                     </Text>
                 </Button>
                 <Button

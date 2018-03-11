@@ -31,6 +31,7 @@ export default class GameScreen extends Component {
             timerID: null,
             endGame: false,
             points: 0,
+            highScore: [],
         };
         this.questionsRef = firebase.firestore().collection("Games").doc("Game1").collection("Questions");
         this.gameRef = firebase.firestore().collection("Games").doc("Game1").collection("Progress");
@@ -70,9 +71,10 @@ export default class GameScreen extends Component {
             });
 
             this.setState({
-                //questionNo: items[0].doc._data.QuestionNumber,
+                questionNo: items[0].doc._data.QuestionNumber,
             });
-            this.setQuestions();
+            if(this.state.endGame !== true)
+                this.setQuestions();
         });
     }
 
@@ -88,7 +90,7 @@ export default class GameScreen extends Component {
                     title,
                 });
                 this.setState({ start: items[0].doc._data.Ready })
-                //this.setState({ endGame: items[0].doc._data.EndGame })
+                this.setState({ endGame: items[0].doc._data.EndGame })
                 if (items[0].doc._data.Ready) {
                     this.setState({
                         counter: 10,
@@ -164,12 +166,16 @@ export default class GameScreen extends Component {
                 });
                 clearInterval(this.state.timerID);
             }
-            if (this.state.questionNo == this.state.questions.length - 1) {
+            if (this.state.questionNo === this.state.questions.length) {
                 this.setState({
                     endGame: true,
                 });
                 clearInterval(this.state.timerID);
             }
+
+            if(this.state.questionNo !== this.state.questions.length)
+                this.setQuestions();
+
         }
     }
 
@@ -230,8 +236,8 @@ export default class GameScreen extends Component {
                                 rounded
                                 light={!this.state.Selected[0]}
                                 warning={this.state.Selected[0] &&
-                                    this.state.Correct != 0}
-                                success={this.state.Correct == 0}
+                                    this.state.Correct !== 0}
+                                success={this.state.Correct === 0}
                                 style={GameScreenStyle.answerAtext}>
                                 <Text>
                                     {this.state.Answer_A}
@@ -241,8 +247,8 @@ export default class GameScreen extends Component {
                                 rounded
                                 light={!this.state.Selected[1]}
                                 warning={this.state.Selected[1] &&
-                                    this.state.Correct != 1}
-                                success={this.state.Correct == 1}
+                                    this.state.Correct !== 1}
+                                success={this.state.Correct === 1}
                                 style={GameScreenStyle.answerText}>
                                 <Text>
                                     {this.state.Answer_B}
@@ -252,8 +258,8 @@ export default class GameScreen extends Component {
                                 rounded
                                 light={!this.state.Selected[2]}
                                 warning={this.state.Selected[2] &&
-                                    this.state.Correct != 2}
-                                success={this.state.Correct == 2}
+                                    this.state.Correct !== 2}
+                                success={this.state.Correct === 2}
                                 style={GameScreenStyle.answerText}>
                                 <Text>
                                     {this.state.Answer_C}
@@ -306,6 +312,7 @@ export default class GameScreen extends Component {
                                 style={GameScreenStyle.answerText}>
                                 <Text>{this.state.Answer_C}</Text>
                             </Button>
+                            <Text>{firebase.auth().currentUser.displayName.toString()}</Text>
                         </Content>
                     </Container>
                 );
