@@ -33,22 +33,19 @@ export default class RegistrationForm extends Component {
     }
 
     onRegister = () => {
-        firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+        firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(this.state.email, this.state.password)
             .then(
                 (success) => {
-                    console.log(success);
-                    success.updateProfile({
-                        displayName: this.state.username,
-                    }).catch(
-                        (err) => {
-                            this.error = err;
-                        });
+                    var data = {
+                        name: this.state.username.valueOf(),
+                        score: 0,
+                    }
+                    var db = firebase.firestore().collection('Users').doc(success.uid).set(data);
+                    this.props.navigation.navigate('Home');
                 }).catch(
-            (err) => {
-                this.error = err;
-            });
-
-        this.props.navigation.navigate('Welcome');
+                    (err) => {
+                        this.error = err;
+                    });
     };
 
     render() {

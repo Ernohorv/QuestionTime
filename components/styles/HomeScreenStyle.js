@@ -4,7 +4,7 @@ export default StyleSheet.create({
 
     thumbnailStyle: {
         alignSelf: 'center',
-        marginTop: 120
+        marginTop: 80
     },
 
     thumbText: {
@@ -15,7 +15,15 @@ export default StyleSheet.create({
     },
 
     startButton: {
-        marginTop: 150,
+        marginTop: 90,
+        width: '80%',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        borderColor: 'white'
+    },
+
+    profileButton: {
+        marginTop: 15,
         width: '80%',
         alignSelf: 'center',
         justifyContent: 'center',
@@ -23,7 +31,7 @@ export default StyleSheet.create({
     },
 
     logOutButton: {
-        marginTop: 30,
+        marginTop: 60,
         marginBottom: 15,
         width: '80%',
         alignSelf: 'center',

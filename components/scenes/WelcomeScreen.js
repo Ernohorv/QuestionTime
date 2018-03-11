@@ -19,10 +19,6 @@ export default class WelcomeScreen extends Component {
         }
     }
 
-    highScoreButon() {
-        this.props.navigation.navigate('HighScore');
-    }
-
     render() {
         return <Container style={{backgroundColor: 'crimson'}}>
             <Content>
@@ -46,14 +42,6 @@ export default class WelcomeScreen extends Component {
                             this.loginButton()}
                         style={WelcomeStyle.loginButton}>
                         <Text style={{color: 'crimson'}}>Login</Text>
-                    </Button>
-
-                    <Button
-                        rounded
-                        onPress={() =>
-                            this.highScoreButon()}
-                        style={WelcomeStyle.highScoreButton}>
-                        <Text style={{color: 'crimson'}}>HighScore</Text>
                     </Button>
                 </View>
             </Content>

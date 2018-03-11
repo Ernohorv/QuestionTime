@@ -11,7 +11,7 @@ export default StyleSheet.create({
 
     signUpButton: {
         marginBottom: 10,
-        marginTop: 150,
+        marginTop: 130,
         width: '80%',
         alignSelf: 'center',
         justifyContent: 'center',
@@ -24,14 +24,7 @@ export default StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: 'white'
     },
-
-    highScoreButton: {
-        width: '80%',
-        alignSelf: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'whitesmoke',
-        marginTop: 10
-    },
+    
     nameText: {
         alignSelf: 'center',
         paddingTop: 10,

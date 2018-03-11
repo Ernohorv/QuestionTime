@@ -10,22 +10,15 @@ export default class LoginForm extends Component {
         this.state= {
             userName: '',
         }
+        var uuid = firebase.auth().currentUser.uid;
+        this.userRef = firebase.firestore().collection("Users").doc(uuid);
     }
 
     changeName() {
-
-        let user = firebase.auth().currentUser;
-        let userName = this.state.userName;
-        user.updateProfile({
-            displayName: userName
-        }).then(function () {
-
-            var displayName = user.displayName;
-            console.log(displayName);
-
-        }, function (error) {
-
-        })
+        this.userRef.update({
+            name: this.state.userName.valueOf(),
+        });
+        this.props.navigation.navigate('Home');
     }
 
     render() {
@@ -33,7 +26,6 @@ export default class LoginForm extends Component {
         return(
             <Container>
                 <Content>
-                    <Text>Profile</Text>
                     <Form>
                         <Item
                             floatingLabel

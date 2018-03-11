@@ -8,7 +8,22 @@ export default class HomeScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            userName: '',
         };
+        var uuid = firebase.auth().currentUser.uid;
+        this.userRef = firebase.firestore().collection("Users").doc(uuid);
+    }
+
+    getUserData(userRef) {
+        userRef.onSnapshot((querySnapshot) => {
+            this.setState({
+                userName: querySnapshot.data().name,
+            });
+        });
+    }
+
+    componentDidMount() {
+        this.getUserData(this.userRef);
     }
 
     startGame() {
@@ -24,29 +39,34 @@ export default class HomeScreen extends Component {
         this.props.navigation.navigate('Profile');
     }
 
+    highScore() {
+        this.props.navigation.navigate('HighScore');
+    }
+
     render() {
         return <Container
             style=
-                {{backgroundColor: 'crimson'}}>
+            {{ backgroundColor: 'crimson' }}>
             <Content>
                 <Thumbnail
                     large
-                    source={{uri: 'https://pbs.twimg.com/profile_images/649344745328607232/XsUnHdyH_400x400.jpg'}}
-                    style={HomeScreenStyle.thumbnailStyle}/>
+                    source={{ uri: 'https://pbs.twimg.com/profile_images/649344745328607232/XsUnHdyH_400x400.jpg' }}
+                    style={HomeScreenStyle.thumbnailStyle} />
                 <Text
                     style={
                         HomeScreenStyle.thumbText}>
-                    Alexander Hamilton
+                    {this.state.userName}
                 </Text>
                 <Button
                     rounded
                     bordered
-                        onPress={() => this.startGame()}
-                        style={
-                            HomeScreenStyle.startButton}>
+                    onPress={() => this.startGame()}
+                    style={
+                        HomeScreenStyle.startButton}>
                     <Text
                         style={{
-                            color: 'white'}}>
+                            color: 'white'
+                        }}>
                         Start game
                     </Text>
                 </Button>
@@ -55,20 +75,34 @@ export default class HomeScreen extends Component {
                     bordered
                     onPress={() => this.profilPage()}
                     style={
-                        HomeScreenStyle.logOutButton}>
+                        HomeScreenStyle.profileButton}>
                     <Text
                         style={{
-                            color: 'white'}}>
+                            color: 'white'
+                        }}>
                         Profile
                     </Text>
                 </Button>
                 <Button
                     rounded
                     bordered
-                        onPress={() => this.logOut()}
-                        style={
-                            HomeScreenStyle.logOutButton}>
-                    <Text style={{color: 'white'}}>Log out</Text>
+                    onPress={() => this.highScore()}
+                    style={
+                        HomeScreenStyle.profileButton}>
+                    <Text
+                        style={{
+                            color: 'white'
+                        }}>
+                        Highscore
+                    </Text>
+                </Button>
+                <Button
+                    rounded
+                    bordered
+                    onPress={() => this.logOut()}
+                    style={
+                        HomeScreenStyle.logOutButton}>
+                    <Text style={{ color: 'white' }}>Log out</Text>
                 </Button>
             </Content>
         </Container>;
