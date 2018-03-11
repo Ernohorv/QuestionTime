@@ -4,6 +4,14 @@ import { Button, Text, Container, Content } from 'native-base';
 import firebase from 'react-native-firebase';
 import HomeScreenStyle from "../styles/HomeScreenStyle";
 
+var Sound = require('react-native-sound');
+Sound.setCategory('Playback');
+var alarm = new Sound('smoke_alarm.mp3', Sound.MAIN_BUNDLE, (error) => {
+    if (error) {
+        return;
+    }
+});
+
 export default class GameScreen extends Component {
 
     constructor(props) {
@@ -19,7 +27,6 @@ export default class GameScreen extends Component {
             Selected: [false, false, false],
             start: false,
             counter: 10,
-            counter2: 5,
             noTime: false,
             timerID: null,
             endGame: false,
@@ -130,42 +137,38 @@ export default class GameScreen extends Component {
 
     tick() {
         this.setState({
-            counter : this.state.counter - 1,
-            counter2: this.state.counter2 - 1,
+            counter: this.state.counter - 1,
         });
-        if (this.noTime) {
-            if(this.state.counter2 == 0){
-                this.setState({
-                    counter: 10,
-                    noTime: false,
-                    Selected: [false, false, false],
-                    questionNo: this.state.questionNo + 1,
-                })
-            }
-        }
-        else {
-            if (this.state.counter == 0) {
-                if (this.state.Selected[0] == this.state.Correct ||
-                    this.state.Selected[1] == this.state.Correct ||
-                    this.state.Selected[2] == this.state.Correct) {
-                    this.setState({
-                        points: this.state.points + 1,
-                        counter2 : 5,                        
-                        noTime: true,
-                    })
+        if (this.state.counter <= 3) {
+            alarm.play((success => {
+                if (success) {
                 }
                 else {
-                    this.setState({
-                        endGame: true,
-                    });
-                    clearInterval(this.state.timerID);
+                    alarm.reset();
                 }
-                if (this.questionNo == this.state.questions.length - 1) {
-                    this.setState({
-                        endGame: true,
-                    });
-                    clearInterval(this.state.timerID);
-                }
+            }));
+        }
+        if (this.state.counter <= 0) {
+            if (this.state.Selected[this.state.Correct]) {
+                this.setState((prevState, props) => ({
+                    points: prevState.points + 1,
+                    Selected: [false, false, false],
+                    questionNo: prevState.questionNo + 1,
+                    counter: 10,
+                }));
+
+            }
+            else {
+                this.setState({
+                    endGame: true,
+                });
+                clearInterval(this.state.timerID);
+            }
+            if (this.state.questionNo == this.state.questions.length - 1) {
+                this.setState({
+                    endGame: true,
+                });
+                clearInterval(this.state.timerID);
             }
         }
     }
@@ -217,7 +220,7 @@ export default class GameScreen extends Component {
                                 style={
                                     GameScreenStyle.correctText}>
                                 The correct answer is...
-                                {this.state.counter2}
+                                {this.state.counter}
                             </Text>
                             <Text
                                 style={GameScreenStyle.questionText}>
