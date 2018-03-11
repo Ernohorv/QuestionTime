@@ -14,7 +14,8 @@ export default class RegistrationForm extends Component {
             loading: false,
             formData: {},
             email: '',
-            password: ''
+            password: '',
+            username: '',
         };
     }
 
@@ -33,8 +34,18 @@ export default class RegistrationForm extends Component {
 
     onRegister = () => {
         firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-            .catch((error) => {
-                console.warn('Error');
+            .then(
+                (success) => {
+                    console.log(success);
+                    success.updateProfile({
+                        displayName: this.state.username,
+                    }).catch(
+                        (err) => {
+                            this.error = err;
+                        });
+                }).catch(
+            (err) => {
+                this.error = err;
             });
 
         this.props.navigation.navigate('Welcome');
@@ -46,7 +57,14 @@ export default class RegistrationForm extends Component {
                 <Content>
                     <Text style={RegistrationStyle.titleText}>Q</Text>
                     <Form>
-                        <Item floatingLabel style={{ marginTop: 30 }}>
+                        <Item floatingLabel style={{ marginTop: 5 }}>
+                            <Label style={{ color: 'crimson' }}>Username</Label>
+                            <Input
+                                onChangeText={(username) => this.setState({ username })}
+                                style={{ color: 'darkgrey' }} />
+                        </Item>
+
+                        <Item floatingLabel>
                             <Label style={{ color: 'crimson' }}>Email</Label>
                             <Input
                                 onChangeText={(email) => this.setState({ email })}

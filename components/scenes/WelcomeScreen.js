@@ -28,6 +28,9 @@ export default class WelcomeScreen extends Component {
             <Content>
                 <View>
                     <Text style={WelcomeStyle.titleText}>Q</Text>
+                    <Text
+                        style={WelcomeStyle.nameText}>
+                    </Text>
                     <Button
                         rounded
                         bordered

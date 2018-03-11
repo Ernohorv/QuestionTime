@@ -32,4 +32,10 @@ export default StyleSheet.create({
         backgroundColor: 'whitesmoke',
         marginTop: 10
     },
+    nameText: {
+        alignSelf: 'center',
+        paddingTop: 10,
+        color: 'whitesmoke',
+        fontSize: 14
+    },
 });
