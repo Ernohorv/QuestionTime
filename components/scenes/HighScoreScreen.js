@@ -1,26 +1,67 @@
 import React, { Component } from 'react';
+import { Button, Text, Container, Content } from 'native-base';
 import Leaderboard from 'react-native-leaderboard';
+import firebase from 'react-native-firebase';
 
-export default class HighScoreSceen extends Component {
+import HighScoreStyle from '../styles/HighScoreStyle';
+
+
+export default class HighScoreScreen extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            data: [
-                {userName: 'Jim', highScore: 0},
-                {userName: 'Bobby', highScore: 1000},
-                {userName: 'Cica', highScore: 999999999999999}
-
-            ]
+            data: [{ name: 'dummy', score: 0 },],
         }
+        this.usersRef = firebase.firestore().collection("Users");
+    }
+
+    goBack() {
+        this.props.navigation.navigate('Home');
+    }
+
+    getHighScores(usersRef) {
+        usersRef.onSnapshot((querySnapshot) => {
+
+            const items = [];
+            querySnapshot.forEach((doc) => {
+                items.push({
+                    name: doc.data().name,
+                    score: doc.data().score,
+                });
+            });
+
+            this.setState({
+                data: items,
+            });
+        });
+    }
+
+    componentDidMount() {
+        this.getHighScores(this.usersRef);
     }
 
     render() {
         return (
-          <Leaderboard
-              sortBy='highScore'
-              labelBy='userName'
-              data={this.state.data}/>
+            <Container
+                style=
+                {{ backgroundColor: 'whitesmoke' }}>
+                <Content>
+                    <Leaderboard
+                        sortBy='score'
+                        labelBy='name'
+                        enableEmptySections='true'
+                        data={this.state.data} />
+                    <Button
+                        rounded
+                        bordered
+                        onPress={() => this.goBack()}
+                        style={
+                            HighScoreStyle.backButton}>
+                        <Text style={{ color: 'crimson' }}>Go back</Text>
+                    </Button>
+                </Content>
+            </Container>
         );
     }
 }

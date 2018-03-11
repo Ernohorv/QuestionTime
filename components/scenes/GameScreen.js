@@ -73,7 +73,7 @@ export default class GameScreen extends Component {
             this.setState({
                 questionNo: items[0].doc._data.QuestionNumber,
             });
-            if(this.state.endGame !== true)
+            if (this.state.endGame !== true)
                 this.setQuestions();
         });
     }
@@ -173,7 +173,7 @@ export default class GameScreen extends Component {
                 clearInterval(this.state.timerID);
             }
 
-            if(this.state.questionNo !== this.state.questions.length)
+            if (this.state.questionNo !== this.state.questions.length)
                 this.setQuestions();
 
         }
@@ -312,7 +312,6 @@ export default class GameScreen extends Component {
                                 style={GameScreenStyle.answerText}>
                                 <Text>{this.state.Answer_C}</Text>
                             </Button>
-                            <Text>{firebase.auth().currentUser.displayName.toString()}</Text>
                         </Content>
                     </Container>
                 );
