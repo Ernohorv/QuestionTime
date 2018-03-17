@@ -40,7 +40,7 @@ export default class RegistrationForm extends Component {
                         name: this.state.username.valueOf(),
                         score: 0,
                     }
-                    var db = firebase.firestore().collection('Users').doc(success.uid).set(data);
+                    var db = firebase.firestore().collection('Users').doc(success.user.uid).set(data);
                     this.props.navigation.navigate('Home');
                 }).catch(
                     (err) => {
