@@ -9,8 +9,11 @@ export default class HomeScreen extends Component {
         super(props);
         this.state = {
             userName: '',
+            pictureUrl: ' ',
         };
+        
         var uuid = firebase.auth().currentUser.uid;
+        this.pictureRef = firebase.storage().ref('profiles/'+uuid+'.png');
         this.userRef = firebase.firestore().collection("Users").doc(uuid);
     }
 
@@ -22,8 +25,29 @@ export default class HomeScreen extends Component {
         });
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.getUserData(this.userRef);
+        this.pictureRef.getDownloadURL()
+        .then((url) => {
+            this.setState({
+                pictureUrl: url,
+            })
+        })
+        .catch((error) => {
+            this.getEmptyImage()
+        });
+    }
+
+    getEmptyImage(){
+        firebase.storage().ref('profiles/empty.png').getDownloadURL()
+        .then((url) => {
+            this.setState({
+                pictureUrl: url,
+            })
+        })
+        .catch((error) => {
+            console.log(error);
+        });
     }
 
     startGame() {
@@ -50,7 +74,7 @@ export default class HomeScreen extends Component {
             <Content>
                 <Thumbnail
                     large
-                    source={{ uri: 'https://pbs.twimg.com/profile_images/649344745328607232/XsUnHdyH_400x400.jpg' }}
+                    source={{ uri: this.state.pictureUrl }}
                     style={HomeScreenStyle.thumbnailStyle} />
                 <Text
                     style={
