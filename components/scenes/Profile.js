@@ -17,15 +17,18 @@ var options = {
   }
 };
 
-export default class LoginForm extends Component {
+export default class Profile extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             userName: '',
+            pic: ''
+
         }
         var uuid = firebase.auth().currentUser.uid;
         this.userRef = firebase.firestore().collection("Users").doc(uuid);
+        this.storageRef = firebase.storage().ref('profiles/'+uuid+'.png');
     }
 
     changeName() {
@@ -40,27 +43,29 @@ export default class LoginForm extends Component {
     }
 
     componentDidMount(){
+
+    }
+
+    changePhoto() {
+
         ImagePicker.showImagePicker(options, (response) => {
             console.log('Response = ', response);
-          
+
             if (response.didCancel) {
-              console.log('User cancelled image picker');
+                console.log('User cancelled image picker');
             }
             else if (response.error) {
-              console.log('ImagePicker Error: ', response.error);
+                console.log('ImagePicker Error: ', response.error);
             }
             else if (response.customButton) {
-              console.log('User tapped custom button: ', response.customButton);
+                console.log('User tapped custom button: ', response.customButton);
             }
             else {
-              let source = { uri: response.uri };
-          
-              // You can also display the image using data:
-              // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-          
-              console.warn(source);
+                this.setState({ pic: response.uri});
             }
-          });
+        });
+
+            this.storageRef.putFile(this.state.pic);
     }
 
     render() {
@@ -84,8 +89,16 @@ export default class LoginForm extends Component {
                         onPress={() =>
                             this.changeName()}
                         style={LoginStyle.loginButton}>
-                        <Text style={{ color: 'crimson' }}>Change</Text>
+                        <Text style={{ color: 'crimson' }}>Change name</Text>
                     </Button>
+
+                    <Button
+                        rounded
+                        onPress={() => this.changePhoto()}
+                        style={LoginStyle.loginButton}>
+                        <Text style={{ color: 'crimson' }}>Change pic</Text>
+                    </Button>
+
                     <Button
                         rounded
                         onPress={() =>

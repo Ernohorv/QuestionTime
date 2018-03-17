@@ -34,12 +34,12 @@ export default class HomeScreen extends Component {
             })
         })
         .catch((error) => {
-            this.getEmptyImage()
+            this.getImage()
         });
     }
 
-    getEmptyImage(){
-        firebase.storage().ref('profiles/empty.png').getDownloadURL()
+    getImage(){
+        firebase.storage().ref('profiles/' + firebase.auth().currentUser.uid + '.png').getDownloadURL()
         .then((url) => {
             this.setState({
                 pictureUrl: url,

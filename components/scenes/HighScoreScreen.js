@@ -12,7 +12,7 @@ export default class HighScoreScreen extends Component {
         super(props);
         this.state = {
             data: [{ name: 'dummy', score: 0 },],
-        }
+    }
         this.usersRef = firebase.firestore().collection("Users");
     }
 
@@ -51,7 +51,7 @@ export default class HighScoreScreen extends Component {
                         sortBy='score'
                         labelBy='name'
                         enableEmptySections='true'
-                        data={this.state.data} />
+                        data={this.state.data}/>
                     <Button
                         rounded
                         bordered
