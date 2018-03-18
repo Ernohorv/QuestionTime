@@ -9,7 +9,7 @@ var ImagePicker = require('react-native-image-picker');
 var options = {
   title: 'Select Avatar',
   customButtons: [
-    {name: 'fb', title: 'Choose Photo from Facebook'},
+    {name: 'delete', title: 'Delete existing'},
   ],
   storageOptions: {
     skipBackup: true,
@@ -23,7 +23,6 @@ export default class Profile extends Component {
         super(props);
         this.state = {
             userName: '',
-            pic: ''
 
         }
         var uuid = firebase.auth().currentUser.uid;
@@ -58,14 +57,27 @@ export default class Profile extends Component {
                 console.log('ImagePicker Error: ', response.error);
             }
             else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
+                if(response.customButton === "delete"){
+                    this.storageRef.delete()
+                    .then((success) => {
+                        console.log(success);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+                }
             }
             else {
-                this.setState({ pic: response.uri});
+                this.storageRef.putFile(response.uri)
+                .then((success) => {
+                    console.log(success);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
             }
         });
 
-            this.storageRef.putFile(this.state.pic);
     }
 
     render() {

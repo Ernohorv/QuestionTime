@@ -27,6 +27,10 @@ export default class HomeScreen extends Component {
 
     componentWillMount() {
         this.getUserData(this.userRef);
+        this.getUserImage();
+    }
+
+    getUserImage(){
         this.pictureRef.getDownloadURL()
         .then((url) => {
             this.setState({
@@ -34,12 +38,12 @@ export default class HomeScreen extends Component {
             })
         })
         .catch((error) => {
-            this.getImage()
+            this.getImage();
         });
     }
 
     getImage(){
-        firebase.storage().ref('profiles/' + firebase.auth().currentUser.uid + '.png').getDownloadURL()
+        firebase.storage().ref('profiles/empty.png').getDownloadURL()
         .then((url) => {
             this.setState({
                 pictureUrl: url,
