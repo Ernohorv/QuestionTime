@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import GameScreenStyle from '../styles/GameScreenStyle'
 import { Button, Text, Container, Content } from 'native-base';
 import firebase from 'react-native-firebase';
-import HomeScreenStyle from "../styles/HomeScreenStyle";
 
 var Sound = require('react-native-sound');
 Sound.setCategory('Playback');
@@ -174,8 +173,8 @@ export default class GameScreen extends Component {
                     Selected: [false, false, false],
                     questionNo: prevState.questionNo + 1,
                     counter: 10,
-                }));
-
+                }))
+                alarm.stop();
             }
             else {
                 this.setState({

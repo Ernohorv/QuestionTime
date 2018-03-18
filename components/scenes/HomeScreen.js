@@ -10,11 +10,15 @@ export default class HomeScreen extends Component {
         this.state = {
             userName: '',
             pictureUrl: ' ',
+            lobby: false,
+            counter : 10,
+            buttonDisable: false,
         };
         
-        var uuid = firebase.auth().currentUser.uid;
+        let uuid = firebase.auth().currentUser.uid;
         this.pictureRef = firebase.storage().ref('profiles/'+uuid+'.png');
         this.userRef = firebase.firestore().collection("Users").doc(uuid);
+        this.lobbyRef = firebase.firestore().collection("Start").doc("xJZq9ld1rnbDrHx7jthl").collection("Ready");
     }
 
     getUserData(userRef) {
@@ -36,6 +40,46 @@ export default class HomeScreen extends Component {
         .catch((error) => {
             this.getImage()
         });
+    }
+
+    startLobby(lobbyRef) {
+        lobbyRef.onSnapshot((querySnapshot) => {
+
+            const items = [];
+            querySnapshot.forEach((doc) => {
+                const { title } = doc.data();
+                items.push({
+                    _key: doc.id,
+                    doc,
+                    title,
+                });
+                this.setState({ start: items[0].doc._data.Ready })
+                if (items[0].doc._data.LobbyOpen) {
+                    this.setState({
+                        counter: 10,
+                        timerID: setInterval(() => this.tick(), 1000),
+                    });
+                }else {
+                    this.setState({
+                        counter: 10,
+                    })
+                }
+            });
+        });
+    }
+
+    componentDidMount() {
+        this.startLobby(this.lobbyRef);
+    }
+
+    tick() {
+        this.setState({
+            counter: this.state.counter - 1,
+        });
+
+        if (this.state.counter <= 0) {
+            this.setState({ buttonDisable: true});
+        }
     }
 
     getImage(){
@@ -85,6 +129,7 @@ export default class HomeScreen extends Component {
                     rounded
                     bordered
                     onPress={() => this.startGame()}
+                    disabled= {this.state.buttonDisable}
                     style={
                         HomeScreenStyle.startButton}>
                     <Text
