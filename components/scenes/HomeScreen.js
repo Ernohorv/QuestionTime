@@ -11,7 +11,6 @@ export default class HomeScreen extends Component {
             userName: '',
             pictureUrl: ' ',
             lobby: false,
-            counter : 10,
             buttonDisable: false,
         };
         
@@ -60,13 +59,15 @@ export default class HomeScreen extends Component {
                 this.setState({ start: items[0].doc._data.Ready })
                 if (items[0].doc._data.LobbyOpen) {
                     this.setState({
-                        counter: 10,
-                        timerID: setInterval(() => this.tick(), 1000),
+                        lobby: true,
+                        buttonDisable: true
                     });
-                }else {
+                }
+                else {
                     this.setState({
-                        counter: 10,
-                    })
+                       lobby: false,
+                       buttonDisable: false
+                    });
                 }
             });
         });
@@ -74,16 +75,6 @@ export default class HomeScreen extends Component {
 
     componentDidMount() {
         this.startLobby(this.lobbyRef);
-    }
-
-    tick() {
-        this.setState({
-            counter: this.state.counter - 1,
-        });
-
-        if (this.state.counter <= 0) {
-            this.setState({ buttonDisable: true});
-        }
     }
 
     getImage(){
