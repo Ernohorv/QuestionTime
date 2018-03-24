@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import firebase from 'react-native-firebase';
 import { Text, Button, Container, Content, Input, Item, Label, Form } from 'native-base';
 import LoginStyle from "../styles/LoginStyle";
+import ImageResizer from 'react-native-image-resizer';
 
 var ImagePicker = require('react-native-image-picker');
 
@@ -63,12 +64,19 @@ export default class Profile extends Component {
                 }
             }
             else {
-                this.storageRef.putFile(response.uri, {cacheControl: 'max-age=30000'})
-                .then((success) => {
+                ImageResizer.createResizedImage(response.path, 600, 600, 'JPEG', 80)
+                .then((resimg) => {
+                    this.storageRef.putFile(resimg.uri, {cacheControl: 'max-age=30000'})
+                    .then((success) => {
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
                 })
-                .catch((error) => {
-                    console.log(error);
-                });
+                .catch((err) => {
+                    console.log(err);
+                })
+
             }
         });
 

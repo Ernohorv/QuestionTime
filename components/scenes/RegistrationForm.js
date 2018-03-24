@@ -44,6 +44,7 @@ export default class RegistrationForm extends Component {
                     this.props.navigation.navigate('Home');
                 }).catch(
                     (err) => {
+                        console.warn(err);
                         this.error = err;
                     });
     };

@@ -21,7 +21,8 @@ export default class LoginForm extends Component {
         this.setState({ error: '', loading: true });
         firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password)
             .then(this.onLoginSucces.bind(this))
-            .catch(() => {
+            .catch((err) => {
+                console.warn(err);
                 this.setState({ error: 'Authentication failed.' });
             });
     }

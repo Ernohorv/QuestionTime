@@ -15,6 +15,7 @@ import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.zmxv.RNSound.RNSoundPackage;
 import com.imagepicker.ImagePickerPackage;
+import fr.bamlab.rnimageresizer.ImageResizerPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -37,7 +38,8 @@ public class MainApplication extends Application implements ReactApplication {
           new RNFirebaseMessagingPackage(),
           new RNFirebaseStoragePackage(),
           new RNSoundPackage(),
-          new ImagePickerPackage()
+          new ImagePickerPackage(),
+          new ImageResizerPackage()
       );
     }
 
