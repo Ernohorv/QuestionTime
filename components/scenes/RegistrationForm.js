@@ -76,6 +76,12 @@ export default class RegistrationForm extends Component {
             firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(this.state.email, this.state.password)
             .then(
                 (success) => {
+                    success.user.sendEmailVerification()
+                    .then((email) => {
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
                     var data = {
                         name: this.state.username.valueOf(),
                         score: 0,
