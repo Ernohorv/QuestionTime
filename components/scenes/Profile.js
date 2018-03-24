@@ -35,15 +35,10 @@ export default class Profile extends Component {
         this.userRef.update({
             name: this.state.userName.valueOf(),
         });
-        this.props.navigation.navigate('Home');
     }
 
     goBack() {
         this.props.navigation.navigate('Home');
-    }
-
-    componentDidMount(){
-
     }
 
     changePhoto() {
