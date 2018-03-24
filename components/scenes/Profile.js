@@ -27,7 +27,7 @@ export default class Profile extends Component {
         }
         var uuid = firebase.auth().currentUser.uid;
         this.userRef = firebase.firestore().collection("Users").doc(uuid);
-        this.storageRef = firebase.storage().ref('profiles/'+uuid+'.png');
+        this.storageRef = firebase.storage().ref('profiles/'+uuid+'.jpg');
     }
 
     changeName() {
@@ -48,19 +48,14 @@ export default class Profile extends Component {
     changePhoto() {
 
         ImagePicker.showImagePicker(options, (response) => {
-            console.log('Response = ', response);
-
             if (response.didCancel) {
-                console.log('User cancelled image picker');
             }
             else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
             }
             else if (response.customButton) {
                 if(response.customButton === "delete"){
                     this.storageRef.delete()
                     .then((success) => {
-                        console.log(success);
                     })
                     .catch((error) => {
                         console.log(error);
@@ -68,9 +63,8 @@ export default class Profile extends Component {
                 }
             }
             else {
-                this.storageRef.putFile(response.uri)
+                this.storageRef.putFile(response.uri, {cacheControl: 'max-age=30000'})
                 .then((success) => {
-                    console.log(success);
                 })
                 .catch((error) => {
                     console.log(error);
