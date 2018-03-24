@@ -10,12 +10,16 @@ export default class HomeScreen extends Component {
         this.state = {
             userName: '',
             pictureUrl: ' ',
+<<<<<<< HEAD
             lobby: false,
             buttonDisable: false,
+=======
+            lobbyOpen: false,
+>>>>>>> 8df38fa9facaa8b1aeb2c5bcd6129103a07b30ff
         };
         
         let uuid = firebase.auth().currentUser.uid;
-        this.pictureRef = firebase.storage().ref('profiles/'+uuid+'.png');
+        this.pictureRef = firebase.storage().ref('profiles/'+uuid+'.jpg');
         this.userRef = firebase.firestore().collection("Users").doc(uuid);
         this.lobbyRef = firebase.firestore().collection("Start").doc("xJZq9ld1rnbDrHx7jthl").collection("Ready");
     }
@@ -56,6 +60,7 @@ export default class HomeScreen extends Component {
                     doc,
                     title,
                 });
+<<<<<<< HEAD
                 this.setState({ start: items[0].doc._data.Ready })
                 if (items[0].doc._data.LobbyOpen) {
                     this.setState({
@@ -69,6 +74,9 @@ export default class HomeScreen extends Component {
                        buttonDisable: false
                     });
                 }
+=======
+                this.setState({ lobbyOpen: items[0].doc._data.LobbyOpen })
+>>>>>>> 8df38fa9facaa8b1aeb2c5bcd6129103a07b30ff
             });
         });
     }
@@ -106,6 +114,24 @@ export default class HomeScreen extends Component {
         this.props.navigation.navigate('HighScore');
     }
 
+    isButtonDisabled(){
+        if(this.state.lobbyOpen){
+            return HomeScreenStyle.startButton;
+        }
+        else{
+            return HomeScreenStyle.startButtonDisabled;
+        }
+    }
+
+    isButtonDisabledText(){
+        if(this.state.lobbyOpen){
+            return {color: 'white'};
+        }
+        else{
+            return {color: 'grey'};
+        }
+    }
+
     render() {
         return <Container
             style=
@@ -124,13 +150,11 @@ export default class HomeScreen extends Component {
                     rounded
                     bordered
                     onPress={() => this.startGame()}
-                    disabled= {this.state.buttonDisable}
+                    disabled= {!this.state.lobbyOpen}
                     style={
-                        HomeScreenStyle.startButton}>
+                        this.isButtonDisabled()}>
                     <Text
-                        style={{
-                            color: 'white'
-                        }}>
+                        style={this.isButtonDisabledText()}>
                         Start game
                     </Text>
                 </Button>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import firebase from 'react-native-firebase';
 import { Text, Button, Container, Content, Input, Item, Label, Form } from 'native-base';
 import LoginStyle from "../styles/LoginStyle";
+import ImageResizer from 'react-native-image-resizer';
 
 var ImagePicker = require('react-native-image-picker');
 
@@ -23,44 +24,50 @@ export default class Profile extends Component {
         super(props);
         this.state = {
             userName: '',
+            nameOK: false,
 
         }
         var uuid = firebase.auth().currentUser.uid;
         this.userRef = firebase.firestore().collection("Users").doc(uuid);
-        this.storageRef = firebase.storage().ref('profiles/'+uuid+'.png');
+        this.storageRef = firebase.storage().ref('profiles/'+uuid+'.jpg');
+    }
+
+    onNameChange(name){
+        if(name.length < 4){
+            this.setState({
+                nameOK: false,
+            });
+        }
+        else{
+            this.setState({
+                nameOK: true,
+            });
+        }
     }
 
     changeName() {
-        this.userRef.update({
-            name: this.state.userName.valueOf(),
-        });
-        this.props.navigation.navigate('Home');
+        if(this.state.nameOK){
+            this.userRef.update({
+                name: this.state.userName.valueOf(),
+            });
+        }        
     }
 
     goBack() {
         this.props.navigation.navigate('Home');
     }
 
-    componentDidMount(){
-
-    }
-
     changePhoto() {
 
         ImagePicker.showImagePicker(options, (response) => {
-            console.log('Response = ', response);
-
             if (response.didCancel) {
-                console.log('User cancelled image picker');
             }
             else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
             }
             else if (response.customButton) {
                 if(response.customButton === "delete"){
                     this.storageRef.delete()
                     .then((success) => {
-                        console.log(success);
                     })
                     .catch((error) => {
                         console.log(error);
@@ -68,13 +75,19 @@ export default class Profile extends Component {
                 }
             }
             else {
-                this.storageRef.putFile(response.uri)
-                .then((success) => {
-                    console.log(success);
+                ImageResizer.createResizedImage(response.path, 600, 600, 'JPEG', 80)
+                .then((resimg) => {
+                    this.storageRef.putFile(resimg.uri, {cacheControl: 'max-age=30000'})
+                    .then((success) => {
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
                 })
-                .catch((error) => {
-                    console.log(error);
-                });
+                .catch((err) => {
+                    console.log(err);
+                })
+
             }
         });
 
@@ -88,10 +101,11 @@ export default class Profile extends Component {
                     <Form>
                         <Item
                             floatingLabel
-                            style={{ marginTop: 30 }}>
+                            style={{ marginTop: 30 }}
+                            error={!this.state.nameOK} success={this.state.nameOK}>
                             <Label style={{ color: 'crimson' }}>Username</Label>
                             <Input
-                                onChangeText={(userName) => this.setState({ userName })}
+                                onChangeText={(userName) => {this.setState({ userName }), this.onNameChange(userName)}}
                                 style={{ color: 'darkgrey' }} />
                         </Item>
                     </Form>

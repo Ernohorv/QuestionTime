@@ -8,34 +8,80 @@ export default class RegistrationForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            confirmPassword: '',
-            error: '',
-            invalidPass: true,
-            loading: false,
-            formData: {},
+            error: ' ',
             email: '',
             password: '',
             username: '',
+            emailOK: false,
+            passwordOK: false,
+            usernameOK: false,
         };
     }
 
-    checkPassword() {
-        if (this.state.password.valueOf() !== this.state.confirmPassword.valueOf()) {
+    onEmailChange(email){
+        var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if(regex.test(email)){
             this.setState({
-                invalidPass: true
+                emailOK: true,
             });
         }
-        else {
+        else{
             this.setState({
-                invalidPass: false
+                emailOK: false,
+            });
+        }
+    }
+
+    onNameChange(name){
+        if(name.length < 4){
+            this.setState({
+                nameOK: false,
+            });
+        }
+        else{
+            this.setState({
+                nameOK: true,
+            });
+        }
+    }
+
+    onPasswordChange(pass){
+        if(pass.length < 6){
+            this.setState({
+                passwordOK: false,
+            });
+        }
+        else{
+            this.setState({
+                passwordOK: true,
+            });
+        }
+    }
+
+    processError(err){
+        if(err.code = "auth/email-already-in-use"){
+            this.setState({
+                error: 'Email already registered'
             });
         }
     }
 
     onRegister = () => {
-        firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(this.state.email, this.state.password)
+        if(!this.state.emailOK && !this.state.passwordOK && !this.state.nameOK){
+            this.setState({
+                error: 'Fix validation errors',
+            });            
+        }
+        else{
+            firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(this.state.email, this.state.password)
             .then(
                 (success) => {
+                    success.user.sendEmailVerification()
+                    .then((email) => {
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
                     var data = {
                         name: this.state.username.valueOf(),
                         score: 0,
@@ -44,8 +90,9 @@ export default class RegistrationForm extends Component {
                     this.props.navigation.navigate('Home');
                 }).catch(
                     (err) => {
-                        this.error = err;
+                        this.processError(err);
                     });
+        }
     };
 
     render() {
@@ -54,37 +101,31 @@ export default class RegistrationForm extends Component {
                 <Content>
                     <Text style={RegistrationStyle.titleText}>Q</Text>
                     <Form>
-                        <Item floatingLabel style={{ marginTop: 5 }}>
+                        <Item floatingLabel style={{ marginTop: 5 }} error={!this.state.nameOK} success={this.state.nameOK}>
                             <Label style={{ color: 'crimson' }}>Username</Label>
                             <Input
-                                onChangeText={(username) => this.setState({ username })}
+                                onChangeText={(username) => {this.setState({ username }, this.onNameChange(username))}}
                                 style={{ color: 'darkgrey' }} />
                         </Item>
 
-                        <Item floatingLabel>
+                        <Item floatingLabel error={!this.state.emailOK} success={this.state.emailOK}>
                             <Label style={{ color: 'crimson' }}>Email</Label>
                             <Input
-                                onChangeText={(email) => this.setState({ email })}
+                                onChangeText={(email) => {this.setState({ email }, this.onEmailChange(email))}}
                                 style={{ color: 'darkgrey' }} />
                         </Item>
 
-                        <Item floatingLabel>
+                        <Item floatingLabel error={!this.state.passwordOK} success={this.state.passwordOK}>
                             <Label style={{ color: 'crimson' }}>Password</Label>
                             <Input
-                                onChangeText={(password) => this.setState({ password })}
-                                secureTextEntry={true}
-                                style={{ color: 'darkgrey' }} />
-                        </Item>
-
-                        <Item floatingLabel>
-                            <Label style={{ color: 'crimson' }}>Confirm password</Label>
-                            <Input
-                                onChangeText={(confirmPassword) => this.setState({ confirmPassword })}
+                                onChangeText={(password) => {this.setState({ password },this.onPasswordChange(password))}}
                                 secureTextEntry={true}
                                 style={{ color: 'darkgrey' }} />
                         </Item>
                     </Form>
-
+                    <Text style={RegistrationStyle.errorText}>
+                        {this.state.error}
+                    </Text>
                     <Button
                         rounded
                         onPress={() =>

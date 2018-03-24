@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 
+
 export default StyleSheet.create({
 
     thumbnailStyle: {
@@ -20,6 +21,14 @@ export default StyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'center',
         borderColor: 'white'
+    },
+
+    startButtonDisabled: {
+        marginTop: 90,
+        width: '80%',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        borderColor: 'grey'
     },
 
     profileButton: {

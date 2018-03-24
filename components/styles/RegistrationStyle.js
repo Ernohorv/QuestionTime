@@ -14,7 +14,19 @@ export default StyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'center',
         backgroundColor: 'white',
-        marginTop: 50,
+        marginTop: 30,
         marginBottom: 15
     },
+<<<<<<< HEAD
+=======
+
+    errorText: {
+        alignSelf: 'center',
+        justifyContent: 'center',
+        marginTop: 15,
+        color: 'red'
+    },
+
+
+>>>>>>> 8df38fa9facaa8b1aeb2c5bcd6129103a07b30ff
 });

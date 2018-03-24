@@ -10,34 +10,77 @@ export default class LoginForm extends Component {
         this.state = {
             email: '',
             password: '',
-            error: 'nincs hiba',
-            loading: false
+            error: ' ',
+            emailOK: false,
+            passwordOK: false,
         };
     }
 
     onLogin() {
-        const { email, password } = this.state;
+        if(!this.state.emailOK){
+            this.setState({
+                error: 'Invalid email',
+            });            
+        }
+        else if(!this.state.passwordOK){
+            this.setState({
+                error: 'Invalid password',
+            });            
+        }
+        else{
+            const { email, password } = this.state;
 
-        this.setState({ error: '', loading: true });
-        firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password)
-            .then(this.onLoginSucces.bind(this))
-            .catch(() => {
-                this.setState({ error: 'Authentication failed.' });
-            });
+            this.setState({ error: '', loading: true });
+            firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password)
+                .then(this.onLoginSucces.bind(this))
+                .catch((err) => {
+                    this.processError(err);
+                });
+        }
+        
     }
 
-    renderButton() {
-        if (this.state.loading) {
-            return <Spinner />;
+    onEmailChange(email){
+        var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if(regex.test(email)){
+            this.setState({
+                emailOK: true,
+            });
+        }
+        else{
+            this.setState({
+                emailOK: false,
+            });
         }
     }
+
+    onPasswordChange(pass){
+        if(pass.length < 6){
+            this.setState({
+                passwordOK: false,
+            });
+        }
+        else{
+            this.setState({
+                passwordOK: true,
+            });
+        }
+    }
+
+    processError(err){
+        switch(err.code){
+            case 'auth/wrong-password':  this.setState({ error: 'Wrong password' }); break;
+            case 'auth/user-not-found':  this.setState({ error: 'User not found' }); break;
+            default: this.setState({ error: 'Authentication error' });
+        }
+    }
+       
 
     onLoginSucces() {
         this.setState({
             email: '',
             password: '',
-            loading: false,
-            error: ''
+            error: ' '
         });
         this.props.navigation.navigate('Home');
     }
@@ -50,22 +93,25 @@ export default class LoginForm extends Component {
                     <Form>
                         <Item
                             floatingLabel
-                            style={{ marginTop: 30 }}>
+                            style={{ marginTop: 30 }}
+                            error={!this.state.emailOK} success={this.state.emailOK}>
                             <Label style={{ color: 'crimson' }}>Email</Label>
                             <Input
-                                onChangeText={(email) => this.setState({ email })}
+                                onChangeText={(email) => {this.setState({ email }), this.onEmailChange(email)}}
                                 style={{ color: 'darkgrey' }} />
                         </Item>
 
-                        <Item floatingLabel>
+                        <Item floatingLabel error={!this.state.passwordOK} success={this.state.passwordOK}>
                             <Label style={{ color: 'crimson' }}>Password</Label>
                             <Input
-                                onChangeText={(password) => this.setState({ password })}
+                                onChangeText={(password) => {this.setState({ password }), this.onPasswordChange(password)}}
                                 secureTextEntry={true}
                                 style={{ color: 'darkgrey' }} />
                         </Item>
                     </Form>
-
+                    <Text style={LoginStyle.errorText}>
+                        {this.state.error}
+                    </Text>
                     <Button
                         rounded
                         onPress={() =>
