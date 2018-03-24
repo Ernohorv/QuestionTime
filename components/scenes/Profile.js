@@ -24,6 +24,7 @@ export default class Profile extends Component {
         super(props);
         this.state = {
             userName: '',
+            nameOK: false,
 
         }
         var uuid = firebase.auth().currentUser.uid;
@@ -31,10 +32,25 @@ export default class Profile extends Component {
         this.storageRef = firebase.storage().ref('profiles/'+uuid+'.jpg');
     }
 
+    onNameChange(name){
+        if(name.length < 4){
+            this.setState({
+                nameOK: false,
+            });
+        }
+        else{
+            this.setState({
+                nameOK: true,
+            });
+        }
+    }
+
     changeName() {
-        this.userRef.update({
-            name: this.state.userName.valueOf(),
-        });
+        if(this.state.nameOK){
+            this.userRef.update({
+                name: this.state.userName.valueOf(),
+            });
+        }        
     }
 
     goBack() {
@@ -85,10 +101,11 @@ export default class Profile extends Component {
                     <Form>
                         <Item
                             floatingLabel
-                            style={{ marginTop: 30 }}>
+                            style={{ marginTop: 30 }}
+                            error={!this.state.nameOK} success={this.state.nameOK}>
                             <Label style={{ color: 'crimson' }}>Username</Label>
                             <Input
-                                onChangeText={(userName) => this.setState({ userName })}
+                                onChangeText={(userName) => {this.setState({ userName }), this.onNameChange(userName)}}
                                 style={{ color: 'darkgrey' }} />
                         </Item>
                     </Form>
