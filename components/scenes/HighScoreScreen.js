@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Button, Text, Container, Content } from 'native-base';
 import Leaderboard from 'react-native-leaderboard';
 import firebase from 'react-native-firebase';
-
 import HighScoreStyle from '../styles/HighScoreStyle';
-
+import { VictoryBar, VictoryChart, VictoryTheme } from 'victory-native';
+import { View } from 'react-native';
 
 export default class HighScoreScreen extends Component {
 
@@ -42,6 +42,7 @@ export default class HighScoreScreen extends Component {
     }
 
     render() {
+
         return (
             <Container
                 style=
@@ -60,6 +61,11 @@ export default class HighScoreScreen extends Component {
                             HighScoreStyle.backButton}>
                         <Text style={{ color: 'crimson' }}>Go back</Text>
                     </Button>
+                    <View style={HighScoreStyle.container}>
+                    <VictoryChart width={500} theme={VictoryTheme.grayscale}>
+                        <VictoryBar data={this.state.data} x= "name" y="score" />
+                    </VictoryChart>
+                    </View>
                 </Content>
             </Container>
         );

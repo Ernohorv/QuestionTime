@@ -9,5 +9,11 @@ export default StyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'center',
         borderColor: 'crimson'
+    },
+    container: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#f5fcff"
     }
 });
