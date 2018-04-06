@@ -34,8 +34,9 @@ export default class GameScreen extends Component {
         };
         var email = firebase.auth().currentUser.email;
         this.questionsRef = firebase.firestore().collection("Games").doc("Game1").collection("Questions");
-        this.startRef = firebase.firestore().collection("Start").doc("Ready")
+        this.startRef = firebase.firestore().collection("Start").doc("Ready");
         this.userRef = firebase.firestore().collection("Users").doc(email);
+        this.scoreRef = firebase.firestore().collection("Games").doc("Game1").collection("Players").doc(email);
     }
 
     getQuestionsFromDatabase(questionsRef) {
@@ -62,13 +63,15 @@ export default class GameScreen extends Component {
     isReady(startRef) {
         startRef.onSnapshot((querySnapshot) => {
                 this.setState({ start: querySnapshot.data().Ready })
-                this.setState({ endGame: querySnapshot.data().EndGame })
                 if (querySnapshot.data().Ready) {
                     this.setState({
                         counter: 10,
                         noTime: false,
                         Selected: [false, false, false],
                         timerID: setInterval(() => this.tick(), 1000),
+                    });
+                    this.scoreRef.set({
+                        score: this.state.points,
                     });
                 }
         });
@@ -162,6 +165,10 @@ export default class GameScreen extends Component {
 
             if (this.state.questionNo !== this.state.questions.length)
                 this.setQuestions();
+
+                this.scoreRef.set({
+                    score: this.state.points,
+                });
 
         }
     }
