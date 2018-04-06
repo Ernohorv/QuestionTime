@@ -15,10 +15,10 @@ export default class HomeScreen extends Component {
             lobbyOpen: false,
         };
         
-        let uuid = firebase.auth().currentUser.uid;
-        this.pictureRef = firebase.storage().ref('profiles/'+uuid+'.jpg');
-        this.userRef = firebase.firestore().collection("Users").doc(uuid);
-        this.lobbyRef = firebase.firestore().collection("Start").doc("xJZq9ld1rnbDrHx7jthl").collection("Ready");
+        let email = firebase.auth().currentUser.email;
+        this.pictureRef = firebase.storage().ref('profiles/'+email+'.jpg');
+        this.userRef = firebase.firestore().collection("Users").doc(email);
+        this.lobbyRef = firebase.firestore().collection("Start").doc("Ready");
     }
 
     getUserData(userRef) {
@@ -48,30 +48,20 @@ export default class HomeScreen extends Component {
 
     startLobby(lobbyRef) {
         lobbyRef.onSnapshot((querySnapshot) => {
-
-            const items = [];
-            querySnapshot.forEach((doc) => {
-                const { title } = doc.data();
-                items.push({
-                    _key: doc.id,
-                    doc,
-                    title,
+            this.setState({ start:querySnapshot.data().Ready })
+            if (querySnapshot.data().LobbyOpen) {
+                this.setState({
+                    lobby: true,
+                    buttonDisable: true
                 });
-                this.setState({ start: items[0].doc._data.Ready })
-                if (items[0].doc._data.LobbyOpen) {
-                    this.setState({
-                        lobby: true,
-                        buttonDisable: true
-                    });
-                }
-                else {
-                    this.setState({
-                       lobby: false,
-                       buttonDisable: false
-                    });
-                }
-                this.setState({ lobbyOpen: items[0].doc._data.LobbyOpen })
-            });
+            }
+            else {
+                this.setState({
+                    lobby: false,
+                    buttonDisable: false
+                });
+            }
+            this.setState({ lobbyOpen: querySnapshot.data().LobbyOpen })
         });
     }
 

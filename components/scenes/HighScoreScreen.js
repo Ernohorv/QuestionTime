@@ -25,14 +25,31 @@ export default class HighScoreScreen extends Component {
 
             const items = [];
             querySnapshot.forEach((doc) => {
-                items.push({
-                    name: doc.data().name,
-                    score: doc.data().score,
+                firebase.storage().ref('profiles/'+doc.id+'.jpg').getDownloadURL().then((url) => {
+                    items.push({
+                        name: doc.data().name,
+                        score: doc.data().score,
+                        iconUrl: url,
+                    });
+                    this.setState({
+                        data: items,
+                    });
+                })
+                .catch(() => {
+                    firebase.storage().ref('profiles/empty.png').getDownloadURL().then((url) => {
+                        items.push({
+                            name: doc.data().name,
+                            score: doc.data().score,
+                            iconUrl: url,
+                        });
+                        this.setState({
+                            data: items,
+                        });
+                    })
+                    .catch((err) => {
+                        console.warn(err);
+                    });
                 });
-            });
-
-            this.setState({
-                data: items,
             });
         });
     }
@@ -52,7 +69,8 @@ export default class HighScoreScreen extends Component {
                         sortBy='score'
                         labelBy='name'
                         enableEmptySections='true'
-                        data={this.state.data}/>
+                        data={this.state.data}
+                        icon='iconUrl'/>
                     <Button
                         rounded
                         bordered

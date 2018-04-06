@@ -27,9 +27,9 @@ export default class Profile extends Component {
             nameOK: false,
 
         }
-        var uuid = firebase.auth().currentUser.uid;
-        this.userRef = firebase.firestore().collection("Users").doc(uuid);
-        this.storageRef = firebase.storage().ref('profiles/'+uuid+'.jpg');
+        var email = firebase.auth().currentUser.email;
+        this.userRef = firebase.firestore().collection("Users").doc(email);
+        this.storageRef = firebase.storage().ref('profiles/'+email+'.jpg');
     }
 
     onNameChange(name){
@@ -77,7 +77,7 @@ export default class Profile extends Component {
             else {
                 ImageResizer.createResizedImage(response.path, 600, 600, 'JPEG', 80)
                 .then((resimg) => {
-                    this.storageRef.putFile(resimg.uri, {cacheControl: 'max-age=30000'})
+                    this.storageRef.putFile(resimg.uri, {cacheControl: 'max-age=300000'})
                     .then((success) => {
                     })
                     .catch((error) => {

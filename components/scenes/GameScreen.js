@@ -32,11 +32,10 @@ export default class GameScreen extends Component {
             points: 0,
             highScore: 0,
         };
-        var uuid = firebase.auth().currentUser.uid;
+        var email = firebase.auth().currentUser.email;
         this.questionsRef = firebase.firestore().collection("Games").doc("Game1").collection("Questions");
-        this.gameRef = firebase.firestore().collection("Games").doc("Game1").collection("Progress");
-        this.startRef = firebase.firestore().collection("Start").doc("xJZq9ld1rnbDrHx7jthl").collection("Ready");
-        this.userRef = firebase.firestore().collection("Users").doc(uuid);
+        this.startRef = firebase.firestore().collection("Start").doc("Ready")
+        this.userRef = firebase.firestore().collection("Users").doc(email);
     }
 
     getQuestionsFromDatabase(questionsRef) {
@@ -55,44 +54,16 @@ export default class GameScreen extends Component {
             this.setState({
                 questions: items,
             });
-        });
-    }
 
-    listenForGameProgress(gameRef) {
-        gameRef.onSnapshot((querySnapshot) => {
-
-            const items = [];
-            querySnapshot.forEach((doc) => {
-                const { title } = doc.data();
-                items.push({
-                    _key: doc.id,
-                    doc,
-                    title,
-                });
-            });
-
-            this.setState({
-                questionNo: items[0].doc._data.QuestionNumber,
-            });
-            if (this.state.endGame !== true)
-                this.setQuestions();
+            this.setQuestions();
         });
     }
 
     isReady(startRef) {
         startRef.onSnapshot((querySnapshot) => {
-
-            const items = [];
-            querySnapshot.forEach((doc) => {
-                const { title } = doc.data();
-                items.push({
-                    _key: doc.id,
-                    doc,
-                    title,
-                });
-                this.setState({ start: items[0].doc._data.Ready })
-                this.setState({ endGame: items[0].doc._data.EndGame })
-                if (items[0].doc._data.Ready) {
+                this.setState({ start: querySnapshot.data().Ready })
+                this.setState({ endGame: querySnapshot.data().EndGame })
+                if (querySnapshot.data().Ready) {
                     this.setState({
                         counter: 10,
                         noTime: false,
@@ -100,7 +71,6 @@ export default class GameScreen extends Component {
                         timerID: setInterval(() => this.tick(), 1000),
                     });
                 }
-            });
         });
     }
 
@@ -114,7 +84,6 @@ export default class GameScreen extends Component {
 
     componentDidMount() {
         this.getQuestionsFromDatabase(this.questionsRef);
-        this.listenForGameProgress(this.gameRef);
         this.isReady(this.startRef);
         this.getUserData(this.userRef);
     }
