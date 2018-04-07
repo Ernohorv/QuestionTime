@@ -159,6 +159,7 @@ dependencies {
     compile project(':react-native-sound')
     compile project(':react-native-image-picker')
     compile project(':react-native-image-resizer')
+    compile project(':react-native-opentok')
 }
 
 // Run this once to be able to run the application with BUCK

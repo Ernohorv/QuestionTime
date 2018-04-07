@@ -15,6 +15,8 @@ import GameScreen from './components/scenes/GameScreen';
 import WelcomeScreen from "./components/scenes/WelcomeScreen";
 import HighScoreScreen from "./components/scenes/HighScoreScreen";
 import Profile from "./components/scenes/Profile";
+import Publish from "./components/opentok/Publish";
+import Viewer from "./components/opentok/Viewer";
 
 const RootStack = StackNavigator(
     {
@@ -25,6 +27,8 @@ const RootStack = StackNavigator(
         Welcome: { screen: WelcomeScreen, navigationOptions: { header: null } },
         HighScore: { screen: HighScoreScreen, navigationOptions: { header: null} },
         Profile: { screen: Profile, navigationOptions: { header: null } },
+        Publish: { screen: Publish, navigationOptions: { header: null } },
+        Viewer: { screen: Viewer, navigationOptions: { header: null } }
     },
     { initialRouteName: 'Welcome' },
 );

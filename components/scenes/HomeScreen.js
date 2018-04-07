@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import { Button, Text, Container, Content, Thumbnail } from 'native-base';
 import firebase from 'react-native-firebase';
 import HomeScreenStyle from '../styles/HomeScreenStyle';
+import {
+    View,
+    TouchableOpacity
+} from 'react-native';
+
+import Styles from '../opentok/Styles';
 
 export default class HomeScreen extends Component {
 
@@ -29,10 +35,11 @@ export default class HomeScreen extends Component {
         });
     }
 
-    componentWillMount() {
+     componentWillMount() {
         this.getUserData(this.userRef);
         this.getUserImage();
     }
+
 
     getUserImage(){
         this.pictureRef.getDownloadURL()
@@ -116,6 +123,14 @@ export default class HomeScreen extends Component {
         }
     }
 
+    publish(){
+        this.props.navigation.navigate('Publish');
+    }
+
+    view(){
+        this.props.navigation.navigate('Viewer');
+    }
+
     render() {
         return <Container
             style=
@@ -130,6 +145,23 @@ export default class HomeScreen extends Component {
                         HomeScreenStyle.thumbText}>
                     {this.state.userName}
                 </Text>
+                <View style={Styles.eventContainer}>
+                    <TouchableOpacity style={Styles.eventBox} onPress={()=>this.publish()}>
+                        <View style={{ flex: 0.2, alignItems: 'center',justifyContent:'center' }}>
+                        </View>
+                        <View style={{flex:0.8,justifyContent:'center'}}>
+                            <Text style={Styles.locBtnText}> Publish </Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={Styles.eventBox} onPress={()=>this.view()}>
+                        <View style={{ flex: 0.2, alignItems: 'center',justifyContent:'center' }}>
+                        </View>
+                        <View style={{flex:0.8,justifyContent:'center'}}>
+                            <Text style={Styles.locBtnText}> View </Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+
                 <Button
                     rounded
                     bordered

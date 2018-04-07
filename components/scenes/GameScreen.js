@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import GameScreenStyle from '../styles/GameScreenStyle'
 import { Button, Text, Container, Content } from 'native-base';
+import OpenTok, { Publisher } from 'react-native-opentok';
 import firebase from 'react-native-firebase';
+import type { Ref } from 'react';
 
 var Sound = require('react-native-sound');
 Sound.setCategory('Playback');
