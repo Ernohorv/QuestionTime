@@ -4,11 +4,11 @@ import OpenTok, {Subscriber } from 'react-native-opentok';
 import type { Ref } from 'react';
 var {height, width} = Dimensions.get('window');
 
-const sessionId = '1_MX40NjA5NjAxMn5-MTUyMzEwNTg1MTIzMH4zZWtRcHVNbXB4ME5HaFJaOGUzdWlyYVN-UH4';
-const token = 'T1==cGFydG5lcl9pZD00NjA5NjAxMiZzaWc9ZGJhZjE4OTlkZDExYTFhMDkyNTczNWQwMDI4YWRkMzJ' +
-    'mNWUxMDhhNDpzZXNzaW9uX2lkPTFfTVg0ME5qQTVOakF4TW41LU1UVXlNekV3TlRnMU1USXpNSDR6Wld0UmNIVk5iWEI0' +
-    'TUU1SGFGSmFPR1V6ZFdseVlWTi1VSDQmY3JlYXRlX3RpbWU9MTUyMzEwNTkwMSZub25jZT0wLjI3NjQ1MzMxMTA2MDYz' +
-    'NTMmcm9sZT1zdWJzY3JpYmVyJmV4cGlyZV90aW1lPTE1MjU2OTc4OTgmaW5pdGlhbF9sYXlvdXRfY2xhc3NfbGlzdD0=';
+const sessionId = '2_MX40NjA5NjAxMn5-MTUyMzExNDQ1NjY1OH5LK3NKQ05mb0k0RWttbGZtUVhLVjNQOC9-fg';
+const token = 'T1==cGFydG5lcl9pZD00NjA5NjAxMiZzaWc9NDExMTk4NDI0MjVlN2JlYjJmZGE1ZTY2OTdkZTc2Z' +
+    'GYxNTQwYWYxMTpzZXNzaW9uX2lkPTJfTVg0ME5qQTVOakF4TW41LU1UVXlNekV4TkRRMU5qWTFPSDVMSzNOS1Ew' +
+    'NW1iMGswUld0dGJHWnRVVmhMVmpOUU9DOS1mZyZjcmVhdGVfdGltZT0xNTIzMTE0NTI4Jm5vbmNlPTAuNTQxNTg1Mz' +
+    'UwNDMyNzgzNCZyb2xlPXN1YnNjcmliZXImZXhwaXJlX3RpbWU9MTUyNTcwNjUyNSZpbml0aWFsX2xheW91dF9jbGFzc19saXN0PQ==';
 
 
 export default class Viewer extends Component<{}> {

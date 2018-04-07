@@ -5,12 +5,11 @@ import Styles from '../opentok/Styles';
 import type { Ref } from 'react';
 var {height, width} = Dimensions.get('window');
 
-const sessionId = '1_MX40NjA5NjAxMn5-MTUyMzEwNTg1MTIzMH4zZWtRcHVNbXB4ME5HaFJaOGUzdWlyYVN-UH4';
-const token = 'T1==cGFydG5lcl9pZD00NjA5NjAxMiZzaWc9YjRhODZkNDZmZjAwNTIxMGU2NTN' +
-    'hY2M5ZWU3MGQ0N2NlMTIzMWRiYTpzZXNzaW9uX2lkPTFfTVg0ME5qQTVOakF4TW41LU1UVXlNekV3TlR' +
-    'nMU1USXpNSDR6Wld0UmNIVk5iWEI0TUU1SGFGSmFPR1V6ZFdseVlWTi1VSDQmY3JlYXRlX3RpbWU9MTUyM' +
-    'zEwNTk0NSZub25jZT0wLjgwNjYwMTY1MDk3MjI1MDImcm9sZT1wdWJsaXNoZXImZXhwaXJlX3RpbWU9MTUyN' +
-    'TY5Nzk0MiZpbml0aWFsX2xheW91dF9jbGFzc19saXN0PQ==';
+const sessionId = '2_MX40NjA5NjAxMn5-MTUyMzExNDQ1NjY1OH5LK3NKQ05mb0k0RWttbGZtUVhLVjNQOC9-fg';
+const token = 'T1==cGFydG5lcl9pZD00NjA5NjAxMiZzaWc9NTEzNDNlZjc2NDMyY2NlNmE5NTMyYjc2MmMxOGQ3Zm' +
+    'Y0OTRkNzAwZDpzZXNzaW9uX2lkPTJfTVg0ME5qQTVOakF4TW41LU1UVXlNekV4TkRRMU5qWTFPSDVMSzNOS1EwNW1i' +
+    'MGswUld0dGJHWnRVVmhMVmpOUU9DOS1mZyZjcmVhdGVfdGltZT0xNTIzMTE0NDk0Jm5vbmNlPTAuNTE3NjI1NzgxODQ0N' +
+    'jgxJnJvbGU9cHVibGlzaGVyJmV4cGlyZV90aW1lPTE1MjU3MDY0OTImaW5pdGlhbF9sYXlvdXRfY2xhc3NfbGlzdD0=';
 
 export default class Publish extends Component<{}> {
 
