@@ -2,12 +2,6 @@ import React, { Component } from 'react';
 import { Button, Text, Container, Content, Thumbnail } from 'native-base';
 import firebase from 'react-native-firebase';
 import HomeScreenStyle from '../styles/HomeScreenStyle';
-import {
-    View,
-    TouchableOpacity
-} from 'react-native';
-
-import Styles from '../opentok/Styles';
 
 export default class HomeScreen extends Component {
 
@@ -145,22 +139,6 @@ export default class HomeScreen extends Component {
                         HomeScreenStyle.thumbText}>
                     {this.state.userName}
                 </Text>
-                <View style={Styles.eventContainer}>
-                    <TouchableOpacity style={Styles.eventBox} onPress={()=>this.publish()}>
-                        <View style={{ flex: 0.2, alignItems: 'center',justifyContent:'center' }}>
-                        </View>
-                        <View style={{flex:0.8,justifyContent:'center'}}>
-                            <Text style={Styles.locBtnText}> Publish </Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={Styles.eventBox} onPress={()=>this.view()}>
-                        <View style={{ flex: 0.2, alignItems: 'center',justifyContent:'center' }}>
-                        </View>
-                        <View style={{flex:0.8,justifyContent:'center'}}>
-                            <Text style={Styles.locBtnText}> View </Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
 
                 <Button
                     rounded
@@ -198,6 +176,30 @@ export default class HomeScreen extends Component {
                             color: 'white'
                         }}>
                         Highscore
+                    </Text>
+                </Button>
+                <Button
+                    rounded
+                    bordered
+                    onPress={() => this.publish()}
+                    style={HomeScreenStyle.profileButton}>
+                    <Text
+                       style={{
+                           color: 'white'
+                       }}>
+                        Publish
+                    </Text>
+                </Button>
+                <Button
+                    rounded
+                    bordered
+                    onPress={() => this.view()}
+                    style={HomeScreenStyle.profileButton}>
+                    <Text
+                       style={{
+                           color: 'white'
+                       }}>
+                        View
                     </Text>
                 </Button>
                 <Button

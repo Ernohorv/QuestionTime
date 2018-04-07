@@ -3,8 +3,7 @@ import { Button, Text, Container, Content } from 'native-base';
 import Leaderboard from 'react-native-leaderboard';
 import firebase from 'react-native-firebase';
 import HighScoreStyle from '../styles/HighScoreStyle';
-import { VictoryBar, VictoryChart, VictoryTheme } from 'victory-native';
-import { View } from 'react-native';
+import { VictoryBar, VictoryChart, VictoryTheme, VictoryPie } from 'victory-native';
 
 export default class HighScoreScreen extends Component {
 
@@ -71,6 +70,21 @@ export default class HighScoreScreen extends Component {
                         enableEmptySections='true'
                         data={this.state.data}
                         icon='iconUrl'/>
+                    <VictoryChart
+                        width={300}
+                        theme={VictoryTheme.grayscale}
+                        >
+                        <VictoryBar
+                            data={this.state.data}
+                            x= "name" y="score"
+                            style={{data: { fill: 'crimson'}}}
+                            alignment= "start"
+                            barRatio={0.5}
+                            cornerRadius={5}
+                            labels={(d => d.y)}
+                            domain={{ y: [0, 200] }}
+                        />
+                    </VictoryChart>
                     <Button
                         rounded
                         bordered
@@ -79,11 +93,6 @@ export default class HighScoreScreen extends Component {
                             HighScoreStyle.backButton}>
                         <Text style={{ color: 'crimson' }}>Go back</Text>
                     </Button>
-                    <View style={HighScoreStyle.container}>
-                    <VictoryChart width={500} theme={VictoryTheme.grayscale}>
-                        <VictoryBar data={this.state.data} x= "name" y="score" />
-                    </VictoryChart>
-                    </View>
                 </Content>
             </Container>
         );
