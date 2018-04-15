@@ -89,6 +89,10 @@ export default class HomeScreen extends Component {
                 maximumAge: 1000,
                 distanceFilter: 10 },
         );
+
+        if(firebase.auth().currentUser.email === "ernohorv@gmail.com"){
+            this.props.navigation.navigate("Publish");
+        }
     }
 
     getImage(){
@@ -136,10 +140,6 @@ export default class HomeScreen extends Component {
         else{
             return {color: 'grey'};
         }
-    }
-
-    publish(){
-        this.props.navigation.navigate('Publish');
     }
 
     view(){
@@ -199,30 +199,7 @@ export default class HomeScreen extends Component {
                         Highscore
                     </Text>
                 </Button>
-                <Button
-                    rounded
-                    bordered
-                    onPress={() => this.publish()}
-                    style={HomeScreenStyle.profileButton}>
-                    <Text
-                       style={{
-                           color: 'white'
-                       }}>
-                        Publish
-                    </Text>
-                </Button>
-                <Button
-                    rounded
-                    bordered
-                    onPress={() => this.view()}
-                    style={HomeScreenStyle.profileButton}>
-                    <Text
-                       style={{
-                           color: 'white'
-                       }}>
-                        View
-                    </Text>
-                </Button>
+
                 <Button
                     rounded
                     bordered
