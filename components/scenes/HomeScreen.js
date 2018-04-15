@@ -13,6 +13,9 @@ export default class HomeScreen extends Component {
             lobby: false,
             buttonDisable: false,
             lobbyOpen: false,
+            latitude: null,
+            longitude: null,
+            error: null,
         };
         
         let email = firebase.auth().currentUser.email;
@@ -34,6 +37,9 @@ export default class HomeScreen extends Component {
         this.getUserImage();
     }
 
+    componentWillUnmount() {
+        navigator.geolocation.clearWatch(this.watchId);
+    }
 
     getUserImage(){
         this.pictureRef.getDownloadURL()
@@ -68,6 +74,21 @@ export default class HomeScreen extends Component {
 
     componentDidMount() {
         this.startLobby(this.lobbyRef);
+
+        this.watchId = navigator.geolocation.watchPosition(
+            (position) => {
+               this.setState({
+                   latitude: position.coords.latitude,
+                   longitude: position.coords.longitude,
+                   error: null,
+               });
+            },
+            (error) => this.setState({error: error.message}),
+            { enableHighAccuracy: true,
+                timeout: 20000,
+                maximumAge: 1000,
+                distanceFilter: 10 },
+        );
     }
 
     getImage(){
