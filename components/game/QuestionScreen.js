@@ -5,6 +5,8 @@ import OpenTok, { Publisher, Subscriber} from 'react-native-opentok';
 import type { Ref } from 'react';
 import {Dimensions} from "react-native";
 var {height, width} = Dimensions.get('window');
+import SelectableQuestion from './questions/SelectableQuestion'
+import TypeableQuestion from './questions/TypeableQuestion'
 
 const sessionId = '2_MX40NjA5NjAxMn5-MTUyMzExNDQ1NjY1OH5LK3NKQ05mb0k0RWttbGZtUVhLVjNQOC9-fg';
 const token = 'T1==cGFydG5lcl9pZD00NjA5NjAxMiZzaWc9NDExMTk4NDI0MjVlN2JlYjJmZGE1ZTY2OTdkZTc2Z' +
@@ -25,6 +27,26 @@ export default class QuestionScreen extends Component {
 
     ref: Ref<typeof Viewer>;
 
+    componentDidMount() {
+        this.props.onRef(this)
+    }
+
+    componentWillUnmount() {
+        this.props.onRef(undefined)
+    }
+
+    getResult(){
+        let Result = false;
+        if(this.props.Question.doc._data.type === 'selectable'){
+            Result = this.selectableRef.getResult();
+            this.selectableRef.clearSelection();
+        }
+        else{
+            Result = this.typeableRef.getResult();
+        }
+        return Result;
+    }
+
     render() {
         return (
             <Container
@@ -32,42 +54,13 @@ export default class QuestionScreen extends Component {
                     backgroundColor: 'whitesmoke'
                 }}>
                 <Content>
+
                     <Text
                         style={GameScreenStyle.counterText}>
                         {this.props.Counter}
                     </Text>
-                    <Text
-                        style={GameScreenStyle.questionText}>
-                        {this.props.Question}
-                    </Text>
-                    <Button
-                        rounded
-                        light={!this.props.Selected[0]}
-                        danger={this.props.Selected[0]}
-                        onPress={() => this.props.selectA()}
-                        style={GameScreenStyle.answerAtext}>
-                        <Text>
-                            {this.props.Answer_A}
-                        </Text>
-                    </Button>
-                    <Button
-                        rounded
-                        light={!this.props.Selected[1]}
-                        danger={this.props.Selected[1]}
-                        onPress={() => this.props.selectB()}
-                        style={GameScreenStyle.answerText}>
-                        <Text>
-                            {this.props.Answer_B}
-                        </Text>
-                    </Button>
-                    <Button
-                        rounded
-                        light={!this.props.Selected[2]}
-                        danger={this.props.Selected[2]}
-                        onPress={() => this.props.selectC()}
-                        style={GameScreenStyle.answerText}>
-                        <Text>{this.props.Answer_C}</Text>
-                    </Button>
+                    
+                    { (this.props.Question.doc._data.type === 'selectable') ? <SelectableQuestion Question={this.props.Question} onRef={ref => (this.selectableRef = ref)}/> : <TypeableQuestion Question={this.props.Question} onRef={ref => (this.typeableRef = ref)}/> }
 
                     <Subscriber
                         sessionId={sessionId}

@@ -28,7 +28,6 @@ export default class GameScreen extends Component<{}> {
             Answer_B: '',
             Answer_C: '',
             Correct: 0,
-            Selected: [false, false, false],
             start: false,
             counter: 10,
             noTime: false,
@@ -98,30 +97,8 @@ export default class GameScreen extends Component<{}> {
 
     setQuestions() {
         this.setState({
-            Question: this.state.questions[this.state.questionNo].doc._data.Question,
-            Answer_A: this.state.questions[this.state.questionNo].doc._data.Answer_A,
-            Answer_B: this.state.questions[this.state.questionNo].doc._data.Answer_B,
-            Answer_C: this.state.questions[this.state.questionNo].doc._data.Answer_C,
-            Correct: this.state.questions[this.state.questionNo].doc._data.Correct,
+            Question: this.state.questions[this.state.questionNo],
         });
-    }
-
-    selectA() {
-        this.setState({
-            Selected: [true, false, false],
-        })
-    }
-
-    selectB() {
-        this.setState({
-            Selected: [false, true, false],
-        })
-    }
-
-    selectC() {
-        this.setState({
-            Selected: [false, false, true],
-        })
     }
 
     updateHighScore() {
@@ -144,7 +121,7 @@ export default class GameScreen extends Component<{}> {
             }));
         }
         if (this.state.counter <= 0) {
-            if (this.state.Selected[this.state.Correct]) {
+            if (this.QuestionScreenRef.getResult()) {
                 this.setState((prevState, props) => ({
                     points: prevState.points + 1,
                     Selected: [false, false, false],
@@ -199,14 +176,7 @@ export default class GameScreen extends Component<{}> {
         else {
             if (this.state.noTime) {
                 return (
-                    <NoTimeScreen 
-                        Counter={this.state.counter}
-                        Question={this.state.Question}
-                        Selected={this.state.Selected}
-                        Correct={this.state.Correct}
-                        Answer_A={this.state.Answer_A}
-                        Answer_B={this.state.Answer_B}
-                        Answer_C={this.state.Answer_C} />
+                    Cica
                 );
             }
             else {
@@ -214,14 +184,7 @@ export default class GameScreen extends Component<{}> {
                     <QuestionScreen 
                         Counter={this.state.counter}
                         Question={this.state.Question}
-                        Selected={this.state.Selected}
-                        Correct={this.state.Correct}
-                        Answer_A={this.state.Answer_A}
-                        Answer_B={this.state.Answer_B}
-                        Answer_C={this.state.Answer_C} 
-                        selectA={this.selectA.bind(this)}
-                        selectB={this.selectB.bind(this)}
-                        selectC={this.selectC.bind(this)} />
+                        onRef={ref => (this.QuestionScreenRef = ref)} />
                 );
             }
         }
