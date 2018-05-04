@@ -9,6 +9,13 @@ import com.rnopentok.RNOpenTokPackage;
 import fr.bamlab.rnimageresizer.ImageResizerPackage;
 import com.imagepicker.ImagePickerPackage;
 import io.invertase.firebase.RNFirebasePackage;
+import com.terrylinla.rnsketchcanvas.SketchCanvasPackage;
+import com.horcrux.svg.SvgPackage;
+import com.zmxv.RNSound.RNSoundPackage;
+import com.rnopentok.RNOpenTokPackage;
+import fr.bamlab.rnimageresizer.ImageResizerPackage;
+import com.imagepicker.ImagePickerPackage;
+import io.invertase.firebase.RNFirebasePackage;
 import com.horcrux.svg.SvgPackage;
 import com.zmxv.RNSound.RNSoundPackage;
 import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
@@ -36,6 +43,13 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new SvgPackage(),
+            new RNSoundPackage(),
+            new RNOpenTokPackage(),
+            new ImageResizerPackage(),
+            new ImagePickerPackage(),
+            new RNFirebasePackage(),
+            new SketchCanvasPackage(),
             new RNSoundPackage(),
             new RNOpenTokPackage(),
             new ImageResizerPackage(),

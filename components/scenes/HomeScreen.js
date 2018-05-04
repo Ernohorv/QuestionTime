@@ -90,9 +90,9 @@ export default class HomeScreen extends Component {
                 distanceFilter: 10 },
         );
 
-        if(firebase.auth().currentUser.email === "ernohorv@gmail.com"){
+        /*if(firebase.auth().currentUser.email === "ernohorv@gmail.com"){
             this.props.navigation.navigate("Publish");
-        }
+        }*/
     }
 
     getImage(){

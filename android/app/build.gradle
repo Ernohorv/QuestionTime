@@ -155,7 +155,6 @@ dependencies {
     compile "com.google.firebase:firebase-auth:11.8.0"
     compile "com.google.firebase:firebase-messaging:11.8.0"
     compile "com.google.firebase:firebase-storage:11.8.0"
-
     compile project(':react-native-sound')
     compile project(':react-native-image-picker')
     compile project(':react-native-image-resizer')
