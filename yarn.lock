@@ -3913,6 +3913,12 @@ react-native-leaderboard@^1.0.4:
   dependencies:
     prop-types "^15.6.0"
 
+react-native-onesignal@^3.1.4:
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/react-native-onesignal/-/react-native-onesignal-3.1.4.tgz#ecaa4c22597d2d76420b922110d28cdaf76ffe7d"
+  dependencies:
+    invariant "^2.2.2"
+
 react-native-opentok@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/react-native-opentok/-/react-native-opentok-2.1.0.tgz#e280720abb2d52fc86d917285ea8506fa39a9116"

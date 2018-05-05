@@ -106,6 +106,8 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
+        manifestPlaceholders = [onesignal_app_id: "cb469d71-b4b5-4563-9572-318679f8ae08",
+                                onesignal_google_project_number: "REMOTE"]
     }
     splits {
         abi {
@@ -149,16 +151,18 @@ dependencies {
     compile "com.facebook.react:react-native:+"  // From node_modules
 
     // Firebase dependencies
-    compile "com.google.android.gms:play-services-base:11.8.0"
-    compile "com.google.firebase:firebase-core:11.8.0"
-    compile "com.google.firebase:firebase-firestore:11.8.0"
-    compile "com.google.firebase:firebase-auth:11.8.0"
-    compile "com.google.firebase:firebase-messaging:11.8.0"
-    compile "com.google.firebase:firebase-storage:11.8.0"
+    compile "com.google.android.gms:play-services-base:12.0.1"
+    compile "com.google.firebase:firebase-core:12.0.1"
+    compile "com.google.firebase:firebase-firestore:12.0.1"
+    compile "com.google.firebase:firebase-auth:12.0.1"
+    compile "com.google.firebase:firebase-messaging:12.0.1"
+    compile "com.google.firebase:firebase-storage:12.0.1"
     compile project(':react-native-sound')
     compile project(':react-native-image-picker')
     compile project(':react-native-image-resizer')
     compile project(':react-native-opentok')
+    compile project(':react-native-onesignal')
+    compile project(':@terrylinla/react-native-sketch-canvas')
 }
 
 // Run this once to be able to run the application with BUCK

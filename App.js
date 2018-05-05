@@ -18,6 +18,8 @@ import Profile from "./components/scenes/Profile";
 import Publish from "./components/opentok/Publish";
 import Viewer from "./components/opentok/Viewer";
 
+import OneSignal from 'react-native-onesignal';
+
 const RootStack = StackNavigator(
     {
         Login: { screen: LoginForm, navigationOptions: { header: null } },
@@ -42,7 +44,8 @@ export default class App extends Component {
      * Stop listening for authentication state changes
      * when the component unmounts.
      */
-    ComponentWillUnMount() {
+
+    componentWillUnMount() {
 
         this.authSubscription();
         BackHandler.removeEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
