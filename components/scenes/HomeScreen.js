@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Text, Container, Content, Thumbnail } from 'native-base';
 import firebase from 'react-native-firebase';
 import HomeScreenStyle from '../styles/HomeScreenStyle';
+import { View } from 'react-native';
 
 export default class HomeScreen extends Component {
 
@@ -146,8 +147,12 @@ export default class HomeScreen extends Component {
         this.props.navigation.navigate('Viewer');
     }
 
+    drawable(){
+        this.props.navigation.navigate('DrawableQuestion');
+    }
+
     render() {
-        return <Container
+                return <Container
             style=
             {{ backgroundColor: 'crimson' }}>
             <Content>
@@ -160,7 +165,7 @@ export default class HomeScreen extends Component {
                         HomeScreenStyle.thumbText}>
                     {this.state.userName}
                 </Text>
-
+               
                 <Button
                     rounded
                     bordered
@@ -207,6 +212,15 @@ export default class HomeScreen extends Component {
                     style={
                         HomeScreenStyle.logOutButton}>
                     <Text style={{ color: 'white' }}>Log out</Text>
+                </Button>
+
+                <Button
+                    rounded
+                    bordered
+                    onPress={() => this.drawable()}
+                    style={
+                        HomeScreenStyle.logOutButton}>
+                    <Text style={{ color: 'white' }}>Draw</Text>
                 </Button>
             </Content>
         </Container>;

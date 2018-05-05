@@ -19,6 +19,7 @@ import Publish from "./components/opentok/Publish";
 import Viewer from "./components/opentok/Viewer";
 
 import OneSignal from 'react-native-onesignal';
+import DrawableQuestion from './components/game/questions/DrawableQuestion';
 
 const RootStack = StackNavigator(
     {
@@ -30,7 +31,8 @@ const RootStack = StackNavigator(
         HighScore: { screen: HighScoreScreen, navigationOptions: { header: null} },
         Profile: { screen: Profile, navigationOptions: { header: null } },
         Publish: { screen: Publish, navigationOptions: { header: null } },
-        Viewer: { screen: Viewer, navigationOptions: { header: null } }
+        Viewer: { screen: Viewer, navigationOptions: { header: null } },
+        DrawableQuestion: { screen: DrawableQuestion, navigationOptions: { header: null } },
     },
     { initialRouteName: 'Welcome' },
 );
