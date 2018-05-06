@@ -7,6 +7,7 @@ import {Dimensions} from "react-native";
 var {height, width} = Dimensions.get('window');
 import SelectableQuestion from './questions/SelectableQuestion'
 import TypeableQuestion from './questions/TypeableQuestion'
+import DrawableQuestion from './questions/DrawableQuestion'
 
 const sessionId = '2_MX40NjA5NjAxMn5-MTUyMzExNDQ1NjY1OH5LK3NKQ05mb0k0RWttbGZtUVhLVjNQOC9-fg';
 const token = 'T1==cGFydG5lcl9pZD00NjA5NjAxMiZzaWc9NDExMTk4NDI0MjVlN2JlYjJmZGE1ZTY2OTdkZTc2Z' +
@@ -41,6 +42,9 @@ export default class QuestionScreen extends Component {
             Result = this.selectableRef.getResult();
             this.selectableRef.clearSelection();
         }
+        else if(this.props.Question.doc._data.type === 'drawable'){
+            Result = this.drawableRef.getResult();
+        }
         else{
             Result = this.typeableRef.getResult();
         }
@@ -60,7 +64,7 @@ export default class QuestionScreen extends Component {
                         {this.props.Counter}
                     </Text>
                     
-                    { (this.props.Question.doc._data.type === 'selectable') ? <SelectableQuestion Question={this.props.Question} onRef={ref => (this.selectableRef = ref)}/> : <TypeableQuestion Question={this.props.Question} onRef={ref => (this.typeableRef = ref)}/> }
+                    { (this.props.Question.doc._data.type === 'selectable') ? <SelectableQuestion Question={this.props.Question} onRef={ref => (this.drawableRef = ref)}/> : (this.props.Question.doc._data.type === 'drawable') ? <DrawableQuestion Question={this.props.Question} onRef={ref => (this.drawableRef = ref)}/> : <TypeableQuestion Question={this.props.Question} onRef={ref => (this.typeableRef = ref)}/> }
 
                     <Subscriber
                         sessionId={sessionId}

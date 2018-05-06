@@ -148,7 +148,7 @@ export default class HomeScreen extends Component {
     }
 
     drawable(){
-        this.props.navigation.navigate('DrawableQuestion');
+        this.props.navigation.navigate('Drawing');
     }
 
     render() {

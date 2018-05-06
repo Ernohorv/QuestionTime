@@ -29,7 +29,7 @@ const RootStack = StackNavigator(
         Profile: { screen: Profile, navigationOptions: { header: null } },
         Publish: { screen: Publish, navigationOptions: { header: null } },
         Viewer: { screen: Viewer, navigationOptions: { header: null } },
-        DrawingScene: { screen: DrawingScene, navigationOptions: { header: null } },
+        Drawing: { screen: DrawingScene, navigationOptions: { header: null } },
     },
     { initialRouteName: 'Welcome' },
 );
