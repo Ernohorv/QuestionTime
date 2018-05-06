@@ -5,9 +5,7 @@ import {
 
 import firebase from 'react-native-firebase';
 import { Fab, Icon, Container, Header, Input, Content, Card, CardItem, Form, Item, Label } from 'native-base';
-
 import { StackNavigator } from 'react-navigation';
-
 import LoginForm from './components/scenes/LoginForm';
 import RegistrationForm from './components/scenes/RegistrationForm';
 import HomeScreen from './components/scenes/HomeScreen';
@@ -17,9 +15,8 @@ import HighScoreScreen from "./components/scenes/HighScoreScreen";
 import Profile from "./components/scenes/Profile";
 import Publish from "./components/opentok/Publish";
 import Viewer from "./components/opentok/Viewer";
-
 import OneSignal from 'react-native-onesignal';
-import DrawableQuestion from './components/game/questions/DrawableQuestion';
+import DrawingScene from "./components/scenes/DrawingScene";
 
 const RootStack = StackNavigator(
     {
@@ -32,7 +29,7 @@ const RootStack = StackNavigator(
         Profile: { screen: Profile, navigationOptions: { header: null } },
         Publish: { screen: Publish, navigationOptions: { header: null } },
         Viewer: { screen: Viewer, navigationOptions: { header: null } },
-        DrawableQuestion: { screen: DrawableQuestion, navigationOptions: { header: null } },
+        DrawingScene: { screen: DrawingScene, navigationOptions: { header: null } },
     },
     { initialRouteName: 'Welcome' },
 );

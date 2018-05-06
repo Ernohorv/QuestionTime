@@ -6,7 +6,7 @@ export default class TypeableQuestion extends Component {
     constructor(props) {
         super(props);
         this.state = ({
-            Answer: 'Answer',
+            Answer: '',
         });
     }
 
