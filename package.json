@@ -11,7 +11,7 @@
     "native-base": "^2.3.9",
     "react": "16.2.0",
     "react-native": "0.53.3",
-    "react-native-firebase": "^3.2.5",
+    "react-native-firebase": "^4.0.7",
     "react-native-image-picker": "^0.26.7",
     "react-native-image-resizer": "^1.0.0",
     "react-native-leaderboard": "^1.0.4",
