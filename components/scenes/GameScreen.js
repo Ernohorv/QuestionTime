@@ -93,7 +93,11 @@ export default class GameScreen extends Component<{}> {
         this.getQuestionsFromDatabase(this.questionsRef);
         this.isReady(this.startRef);
         this.getUserData(this.userRef);
-    }    
+    }
+
+    componentWillUnmount(){
+        clearInterval(this.state.timerID);
+    }
 
     setQuestions() {
         this.setState({
