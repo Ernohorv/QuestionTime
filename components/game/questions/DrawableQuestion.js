@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { SketchCanvas } from '@terrylinla/react-native-sketch-canvas';
 import RNSketchCanvas from '@terrylinla/react-native-sketch-canvas';
+import firebase from 'react-native-firebase';
 
 export default class DrawableQuestion extends Component {
 
@@ -17,11 +18,12 @@ export default class DrawableQuestion extends Component {
     this.storageRef = firebase.storage().ref('draw/drawing.png');
   }
     uploadPicture() {
-      this.storageRef.putFile('/Pictures/drawing.png', {cacheControl: 'max-age=300000'})
+      this.storageRef.putFile('/storage/emulated/0/Pictures/RNSketchCanvas/drawing.png', {cacheControl: 'max-age=300000'})
                         .then((success) => {
+                          console.warn("success");
                         })
                         .catch((error) => {
-                            console.log(error);
+                            console.warn(error);
                         });                
   }    
 
@@ -34,6 +36,7 @@ export default class DrawableQuestion extends Component {
       <View style={styles.container}>
         <View style={{ flex: 1, flexDirection: 'row' }}>
           <RNSketchCanvas
+            onSketchSaved={() => this.uploadPicture()}
             containerStyle={{ backgroundColor: 'transparent', flex: 1 }}
             canvasStyle={{ backgroundColor: 'transparent', flex: 1 }}
             defaultStrokeIndex={0}
